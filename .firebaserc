@@ -1,0 +1,16 @@
+{
+  "targets": {
+    "karadjovcheta-511ed": {
+      "hosting": {
+        "Karadjovcheta": [
+          "karadjovcheta-511ed"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "dev": "karadjovcheta-511ed",
+    "prod": "karadjovcheta-website",
+    "default": "karadjovcheta-website"
+  }
+}
