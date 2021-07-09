@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deployDev": "ng b --c development && firebase deploy -P dev",
-    "deployProd": "ng b --c production && firebase deploy -P prod",
+    "deployProd": "echo CHANGE REDIRECT IN AZURE &&  ng b --c production && firebase deploy -P prod",
     "deployAll": "npm run deployDev && npm run deployProd"
   },
   "private": true,

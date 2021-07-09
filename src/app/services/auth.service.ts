@@ -34,41 +34,72 @@ export class AuthService {
     );
   }
   googleSignIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    this.oAuthLogin(provider);
-  }
-  //
-  async oAuthLogin(
-    provider: firebase.auth.GoogleAuthProvider /* add providers when necessary */
-  ) {
-    const credential = await this.afAuth.signInWithPopup(provider);
-    const newUser = credential.additionalUserInfo?.isNewUser;
-    const user = credential.user;
-    if (!user) return;
-    newUser ? this.createUserData(user) : this.updateUserData(user);
-    this.router.navigate(['/']);
-  }
-  createUserData(user: firebase.User) {
-    if (
+    const provider = new firebase.auth.GoogleAuthProvider;
+    const createUserData = (user: firebase.User) => {
+      if (
       !user.displayName ||
       !user.email ||
       !user.photoURL ||
       !user.metadata.creationTime ||
       !user.metadata.lastSignInTime
-    )
+    ){
       throw new Error('error in creating user data');
+
+    }
+    const data: User = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      photoURL : user.photoURL,
+      timeCreated: new Date(user.metadata.creationTime).getTime(), // this is the only reason for the new function. easier updates - init custom property on use
+      lastLoggedIn: new Date(user.metadata.lastSignInTime).getTime(),
+    };
+    this.afs.doc<User>(`users/${user.uid}`).set(data);
+    }
+    const updateUserData = (user: firebase.User) => {
+      if (
+      !user.displayName ||
+      !user.email ||
+      !user.photoURL ||
+      !user.metadata.creationTime ||
+      !user.metadata.lastSignInTime
+    ){
+      throw new Error('error in updating user data');
+
+    }
     const data: User = {
       uid: user.uid,
       displayName: user.displayName,
       email: user.email,
       photoURL: user.photoURL,
+      lastLoggedIn: new Date(user.metadata.lastSignInTime).getTime(),
+    };
+    this.afs.doc<User>(`users/${user.uid}`).update(data);
+    }
+    this.oAuthLogin(provider, createUserData, updateUserData);
+  }
+  microsoftSignIn(){
+    const createUserData = (user:firebase.User) => {
+      if (
+      !user.displayName ||
+      !user.email ||
+      !user.metadata.creationTime ||
+      !user.metadata.lastSignInTime
+    ){
+      throw new Error('error in creating user data');
+
+    }
+    const data: User = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
       timeCreated: new Date(user.metadata.creationTime).getTime(), // this is the only reason for the new function. easier updates - init custom property on use
       lastLoggedIn: new Date(user.metadata.lastSignInTime).getTime(),
     };
     this.afs.doc<User>(`users/${user.uid}`).set(data);
-  }
-  updateUserData(user: firebase.User) {
-    if (
+    }
+    const updateUserData = (user: firebase.User) => {
+      if (
       !user.displayName ||
       !user.email ||
       !user.photoURL ||
@@ -84,6 +115,44 @@ export class AuthService {
       lastLoggedIn: new Date(user.metadata.lastSignInTime).getTime(),
     };
     this.afs.doc<User>(`users/${user.uid}`).update(data);
+    }
+    const provider = new firebase.auth.OAuthProvider('microsoft.com')
+    this.oAuthLogin(provider, createUserData, updateUserData);
+  }
+  get providers(){
+    return {
+      google: new firebase.auth.GoogleAuthProvider,
+      microsoft: new firebase.auth.OAuthProvider('microsoft.com'),
+      get : (provider: string) => {
+        switch(provider){
+          case 'google.com' : return new firebase.auth.GoogleAuthProvider;
+          case 'microsoft.com': return new firebase.auth.OAuthProvider('microsoft.com');
+          default: return null;
+        }
+      }
+    }
+  }
+  async oAuthLogin(
+    provider: firebase.auth.OAuthProvider | 
+              firebase.auth.GoogleAuthProvider,
+    createUserData: (user: firebase.User) => void,
+    updateUserData: (user: firebase.User) => void
+  ) {
+    const credential = await firebase.auth().signInWithPopup(provider).catch(async error => {
+      if(error.code == 'auth/account-exists-with-different-credential'){
+        const oldProvider = this.providers.get((await firebase.auth().fetchSignInMethodsForEmail(error.email))[0]);
+        if(!oldProvider) throw new Error('Provider not found');
+        const oldCredential = await firebase.auth().signInWithPopup(oldProvider);
+        const user = oldCredential.user;
+        const newCredential = await user?.linkWithCredential(error.credential);
+      } 
+    });
+    if(!credential) return;
+    const newUser = credential.additionalUserInfo?.isNewUser;
+    const user = credential.user;
+    if (!user) return;
+    newUser ? createUserData(user) : updateUserData(user);
+    this.router.navigate(['/']);
   }
   async signOut() {
     await this.afAuth.signOut();
