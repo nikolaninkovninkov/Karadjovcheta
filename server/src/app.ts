@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { response } from 'express';
 const app = express();
 const port = process.env.PORT || 8080;
 app.get('/', (req, res) => {
-  console.log('hello world!');
+  res.send('WOOO! It works! ');
 });
 app.listen(port);
