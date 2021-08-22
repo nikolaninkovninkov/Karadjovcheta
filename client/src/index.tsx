@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.scss';
 import App from './components/App';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext';
-axios.defaults.baseURL = process.env.NODE_SERVER;
-axios.defaults.headers['Content-Type'] = 'application/json;utf-8';
+axios.defaults.baseURL = process.env.REACT_APP_NODE_SERVER;
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>

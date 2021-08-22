@@ -6,9 +6,14 @@ import bcrypt from 'bcrypt';
 import LoginData from '../types/LoginData';
 import toTokenData from '../utils/toTokenData';
 import { auth, FirebaseError, storage, firestore } from 'firebase-admin';
+import { validationResult } from 'express-validator';
 async function registerController(req: express.Request, res: express.Response) {
   const registerData = req.body as RegisterData;
   const user = new UserModel(registerData);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const foundUsersEmail = await UserModel.find({
     email: registerData.email,
   });
@@ -46,6 +51,10 @@ async function registerController(req: express.Request, res: express.Response) {
 }
 async function loginController(req: express.Request, res: express.Response) {
   const loginData = req.body as LoginData;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const isEmail = loginData.username.includes('@');
   const foundUser = await UserModel.findOne(
     isEmail ? { email: loginData.username } : { username: loginData.username },
