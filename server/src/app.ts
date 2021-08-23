@@ -29,7 +29,7 @@ app.use(cors({ origin: '*' }));
 //     privateKey: privateKey.replace(/\\n/g, '\n'),
 //   }),
 // });
-app.post(process.env.WEBHOOK_URL + '', (req, res) => {
+app.post('/viber/webhook', (req, res) => {
   console.log(req);
   res.send('Hello World! ');
 });
