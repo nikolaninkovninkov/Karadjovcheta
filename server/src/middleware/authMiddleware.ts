@@ -1,7 +1,8 @@
 import express from 'express';
-import { auth } from 'firebase-admin';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import TokenData from '../types/client/TokenData';
+import UserModel from '../models/UserModel';
+import DatabaseUser from '../types/database/DatabaseUser';
 const authMiddleware = (
   req: express.Request,
   res: express.Response,
@@ -19,14 +20,13 @@ const authMiddleware = (
   jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
     if (err) return res.status(403).send({ message: 'Invalid token' });
     if (!payload) throw new Error('Payload is undefined');
-    req.user = payload as TokenData;
-    next();
+
+    UserModel.findOne({
+      username: (payload as JwtPayload & TokenData).username,
+    }).then((user) => {
+      req.user = user as DatabaseUser;
+      next();
+    });
   });
-  // auth()
-  //   .verifyIdToken(token)
-  //   .then((payload) => {
-  //     req.user = payload;
-  //     next();
-  //   });
 };
 export default authMiddleware;

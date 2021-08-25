@@ -2,7 +2,6 @@ import express, { response } from 'express';
 import { connect } from 'mongoose';
 import usersRouter from './routes/usersRouter';
 import { config } from 'dotenv';
-import admin from 'firebase-admin';
 import cors from 'cors';
 config();
 const app = express();
@@ -11,19 +10,6 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
-// if (!process.env.FIREBASE_ADMIN_KEY) {
-//   throw new Error('Firebase admin key not defined');
-// }
-// const [projectId, privateKey, clientEmail] =
-//   process.env.FIREBASE_ADMIN_KEY.split(';');
-
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     projectId,
-//     clientEmail,
-//     privateKey: privateKey.replace(/\\n/g, '\n'),
-//   }),
-// });
 
 app.use('/api/users', usersRouter);
 app.listen(port, () => {

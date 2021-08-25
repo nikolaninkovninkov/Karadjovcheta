@@ -1,8 +1,8 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, FormikErrors } from 'formik';
 import useAuth from '../../hooks/useAuth';
 import * as yup from 'yup';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
-
+import RegisterData from '../../types/RegisterData';
 export default function Register() {
   const { register, error } = useAuth();
   const registerSchema = yup.object().shape({
@@ -26,29 +26,35 @@ export default function Register() {
       .min(8, 'Password has to be at least 8 characters long')
       .max(32, 'Password has to be at most 32 characters long'),
   });
+  function getDisplayError(errors: FormikErrors<RegisterData>) {
+    if (getFirstPropertyValue(errors)) {
+      return getFirstPropertyValue(errors);
+    }
+    if (error?.response?.data.message) return error?.response?.data.message;
+    if (error) return 'An unexpected error has occurred. Please try again.';
+  }
   return (
     <Formik
-      initialValues={{ username: '', password: '', email: '', name: '' }}
+      initialValues={
+        { username: '', password: '', email: '', name: '' } as RegisterData
+      }
       onSubmit={register}
-      validationSchema={registerSchema}
-    >
+      validationSchema={registerSchema}>
       {({ errors, touched }) => (
-        <Form className="auth-form">
-          <div className="heading">
+        <Form className='auth-form'>
+          <div className='heading'>
             <h1>Register</h1>
           </div>
-          <label htmlFor="name">Name</label>
-          <Field name="name" className="field"></Field>
-          <label htmlFor="email">Email</label>
-          <Field name="email" className="field"></Field>
-          <label htmlFor="username">Username</label>
-          <Field name="username" className="field"></Field>
-          <label htmlFor="password">Password</label>
-          <Field name="password" className="field" type="password"></Field>
-          <div className="error">
-            {getFirstPropertyValue(errors) ?? error?.response.data.message}
-          </div>
-          <button type="submit">Submit</button>
+          <label htmlFor='name'>Name</label>
+          <Field name='name' className='field'></Field>
+          <label htmlFor='email'>Email</label>
+          <Field name='email' className='field'></Field>
+          <label htmlFor='username'>Username</label>
+          <Field name='username' className='field'></Field>
+          <label htmlFor='password'>Password</label>
+          <Field name='password' className='field' type='password'></Field>
+          <div className='error'>{getDisplayError(errors)}</div>
+          <button type='submit'>Submit</button>
         </Form>
       )}
     </Formik>

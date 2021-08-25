@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import 'components';
 *,
 *::after,
 *::before {
@@ -7,46 +6,4 @@
 }
 body {
   margin: 0;
-}
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.auth-form {
-  $button-color: #832160;
-  $error-color: #b30000;
-  display: flex;
-  flex-direction: column;
-  transform: scale(1.5);
-  border: 1px solid gray;
-  padding: 2rem;
-  > * {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-  }
-  > .heading {
-    text-align: center;
-    width: 300px;
-  }
-  > .error {
-    text-align: center;
-    overflow: hidden;
-    max-width: fit-content;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    color: $error-color;
-    font-weight: 700;
-    padding: 0.5rem;
-  }
-  button {
-    background-color: $button-color;
-    color: white;
-    border-radius: 100000px;
-    margin-top: 1rem;
-    border: none;
-    cursor: pointer;
-  }
 }

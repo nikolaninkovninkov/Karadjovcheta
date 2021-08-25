@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+.auth-form {
+  $button-color: #832160;
+  $error-color: #b30000;
+  border: 3px solid #f1f1f1;
+  padding: 16px;
+  margin: 10px;
+  > * {
+    font-family: Montserrat, sans-serif;
+  }
+  .heading {
+    text-align: center;
+  }
+  .field {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  .error {
+    color: $error-color;
+    width: 100%;
+    text-align: center;
+  }
+  button {
+    background-color: #04aa6d;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

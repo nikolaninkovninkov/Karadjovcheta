@@ -4,6 +4,7 @@ export default interface DatabaseUser {
   email: string;
   username: string;
   password: string;
+  uid: string;
   __v: number;
   createdAt: string;
   updatedAt: string;

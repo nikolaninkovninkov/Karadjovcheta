@@ -1,8 +1,8 @@
 import DatabaseUser from '../types/database/DatabaseUser';
 import { Document } from 'mongoose';
 import TokenData from '../types/client/TokenData';
-export default (user: DatabaseUser & Document<any, any, DatabaseUser>) => {
-  const { name, email, username } = user.toObject();
-  const tokenData = { name, email, username };
-  return tokenData as TokenData;
-};
+function toTokenData(user: DatabaseUser & Document<any, any, DatabaseUser>) {
+  const { username } = user.toObject();
+  return { username } as TokenData;
+}
+export default toTokenData;

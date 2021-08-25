@@ -20,21 +20,20 @@ export default function Login() {
           } as LoginData
         }
         onSubmit={login}
-        validationSchema={LoginSchema}
-      >
+        validationSchema={LoginSchema}>
         {({ errors, touched }) => (
-          <Form className="auth-form">
-            <div className="heading">
+          <Form className='auth-form'>
+            <div className='heading'>
               <h1>Login</h1>
             </div>
-            <label htmlFor="username">Username/Email</label>
-            <Field name="username" className="field"></Field>
-            <label htmlFor="password">Password</label>
-            <Field name="password" type="password" className="field"></Field>
-            <div className="error">
-              {getFirstPropertyValue(errors) ?? error?.response.data.message}
+            <label htmlFor='username'>Username/Email</label>
+            <Field name='username' className='field'></Field>
+            <label htmlFor='password'>Password</label>
+            <Field name='password' type='password' className='field'></Field>
+            <div className='error'>
+              {getFirstPropertyValue(errors) ?? error?.response?.data.message}
             </div>
-            <button type="submit">Submit</button>
+            <button type='submit'>Submit</button>
           </Form>
         )}
       </Formik>

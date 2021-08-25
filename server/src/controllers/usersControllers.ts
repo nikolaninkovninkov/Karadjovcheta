@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import LoginData from '../types/LoginData';
 import toTokenData from '../utils/toTokenData';
-import { auth, FirebaseError, storage, firestore } from 'firebase-admin';
 import { validationResult } from 'express-validator';
 async function registerController(req: express.Request, res: express.Response) {
   const registerData = req.body as RegisterData;
