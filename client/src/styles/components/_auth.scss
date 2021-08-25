@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@use '../variables';
 .auth-form {
   $button-color: #832160;
   $error-color: #b30000;
@@ -7,16 +6,15 @@
   padding: 16px;
   margin: 10px;
   > * {
-    font-family: Montserrat, sans-serif;
+    font-family: variables.$montserrat;
   }
   .heading {
     text-align: center;
   }
   .field {
     width: 100%;
-    padding: 12px 20px;
+    padding: 6px 10px;
     margin: 8px 0;
-    display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
@@ -26,15 +24,22 @@
     text-align: center;
   }
   button {
-    background-color: #04aa6d;
+    background-color: $button-color;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
+    border-radius: 100000px;
     &:hover {
       opacity: 0.8;
+    }
+  }
+  .footer {
+    text-align: center;
+    .link {
+      text-decoration: none;
     }
   }
 }

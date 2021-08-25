@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import * as yup from 'yup';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
 import RegisterData from '../../types/RegisterData';
+import { Link } from 'react-router-dom';
 export default function Register() {
   const { register, error } = useAuth();
   const registerSchema = yup.object().shape({
@@ -55,6 +56,12 @@ export default function Register() {
           <Field name='password' className='field' type='password'></Field>
           <div className='error'>{getDisplayError(errors)}</div>
           <button type='submit'>Submit</button>
+          <div className='footer'>
+            Already have an account? Login{' '}
+            <Link to='/login' className='link'>
+              here
+            </Link>
+          </div>
         </Form>
       )}
     </Formik>
