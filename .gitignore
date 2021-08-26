@@ -5,3 +5,4 @@ build
 keys
 .DS_STORE
 css
+.env.local
