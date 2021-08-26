@@ -5,7 +5,7 @@ import App from './components/App';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './lib/i18next.ts';
+import './lib/i18n.ts';
 axios.defaults.baseURL = process.env.REACT_APP_NODE_SERVER;
 ReactDOM.render(
   <React.StrictMode>
