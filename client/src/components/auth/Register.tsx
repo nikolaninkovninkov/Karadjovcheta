@@ -4,8 +4,10 @@ import * as yup from 'yup';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
 import RegisterData from '../../types/RegisterData';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 export default function Register() {
   const { register, error } = useAuth();
+  const [t] = useTranslation('auth-form');
   const registerSchema = yup.object().shape({
     name: yup.string().required('Name field is required'),
     username: yup
@@ -44,22 +46,22 @@ export default function Register() {
       {({ errors, touched }) => (
         <Form className='auth-form'>
           <div className='heading'>
-            <h1>Register</h1>
+            <h1>{t('register')}</h1>
           </div>
-          <label htmlFor='name'>Name</label>
+          <label htmlFor='name'>{t('name')}</label>
           <Field name='name' className='field'></Field>
-          <label htmlFor='email'>Email</label>
+          <label htmlFor='email'>{t('email')}</label>
           <Field name='email' className='field'></Field>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='username'>{t('username')}</label>
           <Field name='username' className='field'></Field>
-          <label htmlFor='password'>Password</label>
+          <label htmlFor='password'>{t('password')}</label>
           <Field name='password' className='field' type='password'></Field>
           <div className='error'>{getDisplayError(errors)}</div>
-          <button type='submit'>Submit</button>
+          <button type='submit'>{t('submit')}</button>
           <div className='footer'>
-            Already have an account? Login{' '}
+            {t('already-account') + ' '}
             <Link to='/login' className='link'>
-              here
+              {t('here')}
             </Link>
           </div>
         </Form>

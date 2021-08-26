@@ -5,8 +5,10 @@ import useAuth from '../../hooks/useAuth';
 import LoginData from '../../types/LoginData';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 export default function Login() {
   const { login, error } = useAuth();
+  const [t] = useTranslation('auth-form');
   const LoginSchema = object().shape({
     username: string().required('Username/Email field is required'),
     password: string().required('Password field is required'),
@@ -32,19 +34,19 @@ export default function Login() {
         {({ errors, touched }) => (
           <Form className='auth-form'>
             <div className='heading'>
-              <h1>Login</h1>
+              <h1>{t('login')}</h1>
             </div>
-            <label htmlFor='username'>Username/Email</label>
+            <label htmlFor='username'>{`${t('username')}/${t('email')}`}</label>
             <Field name='username' className='field'></Field>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>{t('password')}</label>
             <Field name='password' type='password' className='field'></Field>
 
             <div className='error'>{getDisplayError(errors)}</div>
-            <button type='submit'>Submit</button>
+            <button type='submit'>{t('submit')}</button>
             <div className='footer'>
-              Don't have an account? Register{' '}
+              {t('no-account') + ' '}
               <Link className='link' to='/register'>
-                here
+                {t('here')}
               </Link>
             </div>
           </Form>

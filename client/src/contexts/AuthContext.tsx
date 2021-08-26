@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{ login, user, logout, register, error } as AuthContextType}>
-      {!loadingInitial && children}
+      {!loadingInitial ? children : <div>Loading...</div>}
     </AuthContext.Provider>
   );
 }

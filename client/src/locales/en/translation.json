@@ -1,7 +1,22 @@
 {
   "translation": {
-    "changeTheme": "Change theme",
+    "changeTheme": "Change theme"
+  },
+  "navbar": {
     "home": "Home",
-    "news": "News"
+    "news": "News",
+    "profile": "Profile"
+  },
+  "auth-form": {
+    "login": "Login",
+    "username": "Username",
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "submit": "Submit",
+    "here": "here",
+    "no-account": "Don't have an account? Register",
+    "already-account": "Already have an account? Login",
+    "register": "Register"
   }
 }

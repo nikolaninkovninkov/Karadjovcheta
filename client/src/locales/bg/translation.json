@@ -1,7 +1,22 @@
 {
   "translation": {
-    "changeTheme": "Смени цветове",
+    "changeTheme": "Смени цветове"
+  },
+  "navbar": {
     "home": "Начало",
-    "news": "Новини"
+    "news": "Новини",
+    "profile": "Профил"
+  },
+  "auth-form": {
+    "login": "Влез",
+    "username": "Потребителско име",
+    "email": "Имейл",
+    "name": "Име",
+    "password": "Парола",
+    "submit": "Предай",
+    "here": "тук",
+    "no-account": "Нямате акаунт? Регистрирайте се",
+    "already-account": "Вече имате акаунт? Влезте",
+    "register": "Регистрирай се"
   }
 }

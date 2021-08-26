@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 export default function Navbar() {
   const history = useHistory();
-  const { t, i18n } = useTranslation();
+  const [t] = useTranslation('navbar');
   return (
     <nav className='navbar'>
       <div className='logo'>
@@ -24,6 +24,11 @@ export default function Navbar() {
         <li>
           <Link to='/news' className='link'>
             {t('news')}
+          </Link>
+        </li>
+        <li>
+          <Link to='/profile' className='link'>
+            {t('profile')}
           </Link>
         </li>
       </ul>
