@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './lib/i18n.ts';
 axios.defaults.baseURL = process.env.REACT_APP_NODE_SERVER;
+console.log(process.env);
 ReactDOM.render(
   <React.StrictMode>
     <Suspense fallback={<div>Loading...</div>}>
