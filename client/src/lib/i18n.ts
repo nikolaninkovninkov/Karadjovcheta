@@ -11,7 +11,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: process.env.NODE_ENV === 'production',
+    debug: process.env.NODE_ENV === 'development',
     whitelist: Languages,
     interpolation: {
       escapeValue: false,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Dashboard({
@@ -9,9 +9,6 @@ export default function Dashboard({
   theme: string;
 }) {
   const { t, i18n } = useTranslation('translation');
-  useEffect(() => {
-    console.log(t('changeTheme'));
-  }, [i18n.language, t]);
   return (
     <div>
       <h1>{t('changeTheme')}</h1>
