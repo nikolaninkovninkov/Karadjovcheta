@@ -38,6 +38,7 @@ export default function Login() {
             <Field name='username' className='field'></Field>
             <label htmlFor='password'>Password</label>
             <Field name='password' type='password' className='field'></Field>
+
             <div className='error'>{getDisplayError(errors)}</div>
             <button type='submit'>Submit</button>
             <div className='footer'>

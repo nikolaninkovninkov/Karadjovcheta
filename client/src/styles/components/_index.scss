@@ -1,2 +1,3 @@
-@use 'app';
-@use 'auth';
+@forward 'app';
+@forward 'auth';
+@forward 'navbar';

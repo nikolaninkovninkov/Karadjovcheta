@@ -1,16 +1,21 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 import AuthContextType from '../types/AuthContextType';
 import LoginData from '../types/LoginData';
 import RegisterData from '../types/RegisterData';
 import TokenData from '../types/TokenData';
-const AuthContext = createContext<any>({});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useLocalStorage('auth-token', '');
   const [user, setUser] = useState<TokenData>();
   const [error, setError] = useState<AxiosError>();
   const [loadingInitial, setLoadingInitial] = useState(true);
+  const location = useLocation();
+  useEffect(() => {
+    setError(undefined);
+  }, [location.pathname]);
   useEffect(() => {
     if (!token) {
       return setLoadingInitial(false);

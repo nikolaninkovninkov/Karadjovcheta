@@ -6,7 +6,7 @@ export default function useLocalStorage<T>(
 ): [T, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState(() => {
     const storageValue = localStorage.getItem(key);
-    if (storageValue != null) {
+    if (storageValue && storageValue.length) {
       return JSON.parse(storageValue);
     }
     if (initialValue instanceof Function) return initialValue();

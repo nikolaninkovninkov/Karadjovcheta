@@ -1,12 +1,15 @@
 @use '../variables';
+@use '../theme';
 .auth-form {
-  $button-color: #832160;
-  $error-color: #b30000;
-  border: 3px solid #f1f1f1;
   padding: 16px;
   margin: 10px;
+  @include theme.themify {
+    color: theme.themed('backgroundTextColor');
+    background-color: theme.themed('backgroundColor');
+    border: 1px solid theme.themed('borderColor');
+  }
   > * {
-    font-family: variables.$montserrat;
+    font-family: variables.$font-montserrat;
   }
   .heading {
     text-align: center;
@@ -15,17 +18,22 @@
     width: 100%;
     padding: 6px 10px;
     margin: 8px 0;
-    border: 1px solid #ccc;
+    border: 1px solid hsl(0, 0%, 80%);
     box-sizing: border-box;
   }
   .error {
-    color: $error-color;
+    @include theme.themify {
+      color: theme.themed('errorColor');
+    }
     width: 100%;
     text-align: center;
+    font-weight: bold;
   }
   button {
-    background-color: $button-color;
-    color: white;
+    @include theme.themify {
+      color: theme.themed('primaryTextColor');
+      background-color: theme.themed('primaryColor');
+    }
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -40,6 +48,10 @@
     text-align: center;
     .link {
       text-decoration: none;
+      @include theme.themify {
+        color: theme.themed('primaryColor');
+      }
+      font-weight: 1000;
     }
   }
 }
