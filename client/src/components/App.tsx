@@ -13,7 +13,7 @@ function App() {
   return (
     <div className={'app theme-' + theme}>
       <Route path='/register' exact>
-        {user ? <Redirect to='/profile' /> : <Register />}
+        {user ? <Redirect to='/' /> : <Register />}
       </Route>
       <Route path='/login' exact>
         {user ? <Redirect to='/' /> : <Login />}

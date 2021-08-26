@@ -59,7 +59,11 @@ async function loginController(req: express.Request, res: express.Response) {
     isEmail ? { email: loginData.username } : { username: loginData.username },
   );
   if (!foundUser) {
-    return res.json({ message: 'Invalid credentials' });
+    return res.status(400).json({
+      message: `No account was fount with that ${
+        isEmail ? 'email' : 'username'
+      }. Maybe you haven't registered yet?`,
+    });
   }
   const isPasswordMatch = await bcrypt.compare(
     loginData.password,
