@@ -9,7 +9,7 @@ import Dashboard from './Dashboard';
 import Navbar from './layout/Navbar';
 function App() {
   const { user } = useAuth();
-  const [theme, setTheme] = useLocalStorage('theme', 'dark-raspberry');
+  const [theme, setTheme] = useLocalStorage('theme', 'golden-yellow');
   return (
     <div className={'app theme-' + theme}>
       <Route path='/register' exact>
