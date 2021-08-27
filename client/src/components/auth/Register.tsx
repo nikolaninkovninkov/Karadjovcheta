@@ -2,7 +2,7 @@ import { Field, Form, Formik, FormikErrors } from 'formik';
 import useAuth from '../../hooks/useAuth';
 import * as yup from 'yup';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
-import RegisterData from '../../types/RegisterData';
+import RegisterData from '../../types/requests/RegisterData';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 export default function Register() {

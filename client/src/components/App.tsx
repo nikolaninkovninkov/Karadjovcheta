@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -7,12 +7,13 @@ import Profile from './auth/Profile';
 import Register from './auth/Register';
 import Dashboard from './Dashboard';
 import Navbar from './layout/Navbar';
+import News from './news/News';
 function App() {
   const { user } = useAuth();
   const [theme, setTheme] = useLocalStorage('theme', 'golden-yellow');
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
   return (
     <div className={'app theme-' + theme}>
       <Route path='/register' exact>
@@ -32,6 +33,7 @@ function App() {
           <Redirect to='/login' />
         )}
       </Route>
+      <Route path='/news' exact component={News}></Route>
     </div>
   );
 }

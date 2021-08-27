@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Form, Formik, FormikErrors } from 'formik';
 import { object, string } from 'yup';
 import useAuth from '../../hooks/useAuth';
-import LoginData from '../../types/LoginData';
+import LoginData from '../../types/requests/LoginData';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

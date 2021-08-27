@@ -16,7 +16,6 @@ const userSchema = new Schema<DatabaseUser>(
     },
     email: { type: String, required: true, unique: true, immutable: true },
     password: { type: String, required: true },
-    uid: { type: String, required: true, unique: true, default: nanoid() },
     role: {
       type: String,
       required: true,

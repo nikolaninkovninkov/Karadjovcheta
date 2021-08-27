@@ -7,12 +7,11 @@ import DatabaseArticle from '../types/database/DatabaseArticle';
 import DatabaseUser from '../types/database/DatabaseUser';
 import roleToPermissions from '../utils/roleToPermissions';
 import toClientArticle from '../utils/toClientArticle';
-import toClientData from '../utils/toClientArticle';
 import { Document } from 'mongoose';
 const getAllClientArticles = async () => {
   const articles = await ArticleModel.find({ type: 'news' });
   const clientArticles = await ArticleModel.populate(articles, 'author');
-  return clientArticles;
+  return clientArticles.map(toClientArticle);
 };
 async function getNews(req: express.Request, res: express.Response) {
   const newsArticles = await getAllClientArticles();

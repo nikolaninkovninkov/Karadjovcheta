@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
-import LoginData from './LoginData';
-import RegisterData from './RegisterData';
-import User from './User';
+import LoginData from '../requests/LoginData';
+import RegisterData from '../requests/RegisterData';
+import User from '../responses/User';
 
 export default interface AuthContextType {
   user: User | undefined;
