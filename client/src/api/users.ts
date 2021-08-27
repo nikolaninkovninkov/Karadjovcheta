@@ -1,16 +1,17 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import LoginData from '../types/LoginData';
-import RegisterData from '../types/RegisterData';
-import User from '../types/User';
-async function apiRegister(registerData: RegisterData) {
+import LoginData from '../types/requests/LoginData';
+import RegisterData from '../types/requests/RegisterData';
+import User from '../types/responses/User';
+async function register(registerData: RegisterData) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/register',
     method: 'POST',
+    data: registerData,
   };
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<string>;
 }
-async function apiLogin(loginData: LoginData) {
+async function login(loginData: LoginData) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/login',
     method: 'POST',
@@ -19,7 +20,7 @@ async function apiLogin(loginData: LoginData) {
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<string>;
 }
-async function apiGetUser(token: string) {
+async function getUser(token: string) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/auth',
     method: 'GET',
@@ -30,4 +31,4 @@ async function apiGetUser(token: string) {
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<User>;
 }
-export { apiLogin, apiGetUser, apiRegister };
+export { login, getUser, register };
