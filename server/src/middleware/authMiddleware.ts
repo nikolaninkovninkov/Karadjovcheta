@@ -12,7 +12,16 @@ const authMiddleware = (
   if (!authHeader) {
     return res.status(400).json({ message: 'Invalid token' });
   }
-  const token = authHeader.split('Bearer ')[1];
+  const token = authHeader
+    .split('Bearer ')[1]
+    .split('')
+    .map((char) => {
+      if (char == '"') {
+        return '';
+      }
+      return char;
+    })
+    .join('');
   if (!process.env.JWT_SECRET) {
     res.status(500).json({ message: 'Server error' });
     throw new Error('JWT_SECRET is not defined');

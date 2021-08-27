@@ -6,11 +6,11 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import AuthContextType from '../types/AuthContextType';
 import LoginData from '../types/LoginData';
 import RegisterData from '../types/RegisterData';
-import TokenData from '../types/TokenData';
+import User from '../types/User';
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useLocalStorage('auth-token', '');
-  const [user, setUser] = useState<TokenData>();
+  const [user, setUser] = useState<User>();
   const [error, setError] = useState<AxiosError>();
   const [loadingInitial, setLoadingInitial] = useState(true);
   const location = useLocation();
@@ -34,12 +34,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch((error) => {
         setError(error);
-        setToken('');
+        // setToken('');
       })
       .finally(() => {
         setLoadingInitial(false);
       });
-  }, [token, setToken]);
+  }, [token]);
   async function login(loginData: LoginData) {
     const axiosRequestConfig: AxiosRequestConfig = {
       url: '/api/users/login',

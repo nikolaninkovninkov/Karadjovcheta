@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import LoginData from '../types/LoginData';
-import TokenData from '../types/TokenData';
-
+import User from '../types/User';
 async function login(loginData: LoginData) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/login',
@@ -20,6 +19,6 @@ async function get(token: string) {
     },
   };
   const response = await axios(axiosRequestConfig);
-  return response as AxiosResponse<TokenData>;
+  return response as AxiosResponse<User>;
 }
 export { login, get };
