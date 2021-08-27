@@ -24,7 +24,8 @@ const authMiddleware = (
     UserModel.findOne({
       username: (payload as JwtPayload & TokenData).username,
     }).then((user) => {
-      req.user = user as DatabaseUser;
+      if (!user) return res.status(400).json({ message: 'Invalid token' });
+      req.user = (user as any)._doc as DatabaseUser;
       next();
     });
   });

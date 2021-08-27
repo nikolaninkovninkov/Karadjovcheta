@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Loader from '../components/layout/Loader';
 import useLocalStorage from '../hooks/useLocalStorage';
 import AuthContextType from '../types/AuthContextType';
 import LoginData from '../types/LoginData';
@@ -33,11 +34,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch((error) => {
         setError(error);
+        setToken('');
       })
       .finally(() => {
         setLoadingInitial(false);
       });
-  }, [token]);
+  }, [token, setToken]);
   async function login(loginData: LoginData) {
     const axiosRequestConfig: AxiosRequestConfig = {
       url: '/api/users/login',
@@ -67,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{ login, user, logout, register, error } as AuthContextType}>
-      {!loadingInitial ? children : <div>Loading...</div>}
+      {!loadingInitial ? children : <Loader />}
     </AuthContext.Provider>
   );
 }

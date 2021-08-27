@@ -1,3 +1,4 @@
+import { Document } from 'mongoose';
 export default interface DatabaseUser {
   _id: string;
   name: string;
@@ -8,4 +9,5 @@ export default interface DatabaseUser {
   __v: number;
   createdAt: string;
   updatedAt: string;
+  role: UserRole;
 }

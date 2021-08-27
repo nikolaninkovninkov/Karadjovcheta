@@ -6,6 +6,8 @@ import bcrypt from 'bcrypt';
 import LoginData from '../types/LoginData';
 import toTokenData from '../utils/toTokenData';
 import { validationResult } from 'express-validator';
+import DatabaseUser from '../types/database/DatabaseUser';
+import toClientUser from '../utils/toClientUser';
 async function registerController(req: express.Request, res: express.Response) {
   const registerData = req.body as RegisterData;
   const user = new UserModel(registerData);
@@ -87,7 +89,9 @@ async function loginController(req: express.Request, res: express.Response) {
   );
 }
 function getUserController(req: express.Request, res: express.Response) {
-  const user = req.user;
-  res.json(user);
+  const user = req.user as DatabaseUser;
+  if (!user) return res.json(user);
+  const clientUser = toClientUser(user);
+  res.json(clientUser);
 }
 export { registerController, loginController, getUserController };

@@ -4,7 +4,7 @@ import DatabaseUser from './types/database/DatabaseUser';
 declare global {
   namespace Express {
     interface Request {
-      user: DatabaseUser;
+      user: DatabaseUser | undefined;
     }
   }
 }

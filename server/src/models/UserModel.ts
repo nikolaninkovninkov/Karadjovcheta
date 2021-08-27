@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import DatabaseUser from '../types/database/DatabaseUser';
-import nanoid from '../utils/nanoid';
-const { Buffer } = Schema.Types;
+import nanoid from '../lib/nanoid';
+// const { Embedded } = Schema.Types;
 const userSchema = new Schema<DatabaseUser>(
   {
     name: {
@@ -12,11 +12,17 @@ const userSchema = new Schema<DatabaseUser>(
       type: String,
       required: true,
       unique: true,
+      immutable: true,
     },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, immutable: true },
     password: { type: String, required: true },
     uid: { type: String, required: true, unique: true, default: nanoid() },
-    // profileImage: { data: Buffer, contentType: String },
+    role: {
+      type: String,
+      required: true,
+      enum: ['admin', 'user', 'moderator'],
+      default: 'user',
+    },
   },
   { timestamps: true },
 );
