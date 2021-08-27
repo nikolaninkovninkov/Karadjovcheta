@@ -1,6 +1,7 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { AxiosError } from 'axios';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import * as usersApi from '../api/users';
 import Loader from '../components/layout/Loader';
 import useLocalStorage from '../hooks/useLocalStorage';
 import AuthContextType from '../types/AuthContextType';
@@ -21,14 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) {
       return setLoadingInitial(false);
     }
-    const axiosRequestConfig: AxiosRequestConfig = {
-      url: '/api/users/auth',
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
-    axios(axiosRequestConfig)
+    usersApi
+      .apiGetUser(token)
       .then((response) => {
         setUser(response.data);
       })
@@ -41,25 +36,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
   }, [token]);
   async function login(loginData: LoginData) {
-    const axiosRequestConfig: AxiosRequestConfig = {
-      url: '/api/users/login',
-      method: 'POST',
-      data: loginData,
-    };
-    const response = await axios(axiosRequestConfig).catch((err) =>
-      setError(err),
-    );
+    const response = await usersApi
+      .apiLogin(loginData)
+      .catch((err) => setError(err));
     setToken(typeof response?.data == 'string' ? response.data : '');
   }
   async function register(registerData: RegisterData) {
-    const axiosRequestConfig: AxiosRequestConfig = {
-      url: '/api/users/register',
-      method: 'POST',
-      data: registerData,
-    };
-    const response = await axios(axiosRequestConfig).catch((error) =>
-      setError(error),
-    );
+    const response = await usersApi
+      .apiRegister(registerData)
+      .catch((error) => setError(error));
     setToken(response?.data ?? '');
   }
   function logout() {

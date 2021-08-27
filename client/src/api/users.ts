@@ -1,7 +1,16 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import LoginData from '../types/LoginData';
+import RegisterData from '../types/RegisterData';
 import User from '../types/User';
-async function login(loginData: LoginData) {
+async function apiRegister(registerData: RegisterData) {
+  const axiosRequestConfig: AxiosRequestConfig = {
+    url: '/api/users/register',
+    method: 'POST',
+  };
+  const response = await axios(axiosRequestConfig);
+  return response as AxiosResponse<string>;
+}
+async function apiLogin(loginData: LoginData) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/login',
     method: 'POST',
@@ -10,7 +19,7 @@ async function login(loginData: LoginData) {
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<string>;
 }
-async function get(token: string) {
+async function apiGetUser(token: string) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/users/auth',
     method: 'GET',
@@ -21,4 +30,4 @@ async function get(token: string) {
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<User>;
 }
-export { login, get };
+export { apiLogin, apiGetUser, apiRegister };
