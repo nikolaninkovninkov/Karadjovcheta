@@ -8,14 +8,33 @@ import DatabaseUser from '../types/database/DatabaseUser';
 import roleToPermissions from '../utils/roleToPermissions';
 import toClientArticle from '../utils/toClientArticle';
 import { Document } from 'mongoose';
-const getAllClientArticles = async () => {
-  const articles = await ArticleModel.find({ type: 'news' });
+const toClientArticles = async (
+  articles: Array<DatabaseArticle & Document<any, any, DatabaseArticle>>,
+) => {
   const clientArticles = await ArticleModel.populate(articles, 'author');
   return clientArticles.map(toClientArticle);
 };
 async function getNews(req: express.Request, res: express.Response) {
-  const newsArticles = await getAllClientArticles();
-  res.status(200).json(newsArticles);
+  const params = req.query as {
+    limit: string | undefined;
+    offset: string | undefined;
+  };
+  if (!params.limit || !params.offset) {
+    return res.status(400).json({ message: 'Limit and offset invalid' });
+  }
+  const [limit, offset] = [parseInt(params.limit), parseInt(params.offset)];
+  const articleCount = await ArticleModel.countDocuments();
+  if (offset >= articleCount) {
+    return res.json([]);
+  }
+  const articles = await ArticleModel.find({ type: 'news' })
+    .sort({
+      dateCreated: -1,
+    })
+    .limit(limit)
+    .skip(offset);
+  const newsArticles = await toClientArticles(articles);
+  res.status(200).json({ newsArticles, totalArticleCount: articleCount });
 }
 async function createNewsArticle(req: express.Request, res: express.Response) {
   const user = req.user;
@@ -31,7 +50,7 @@ async function createNewsArticle(req: express.Request, res: express.Response) {
     ...articleData,
   });
   const savedArticle = await article.save();
-  const allArticles = await getAllClientArticles();
-  res.status(200).json(allArticles);
+  const populated = await ArticleModel.populate(savedArticle, 'author');
+  res.status(200).json(toClientArticle(populated));
 }
 export { getNews, createNewsArticle };

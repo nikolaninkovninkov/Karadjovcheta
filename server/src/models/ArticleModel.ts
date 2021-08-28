@@ -19,5 +19,11 @@ const ArticleSchema = new Schema<DatabaseArticle>({
     immutable: true,
     ref: 'User',
   },
+  dateCreated: {
+    type: Number,
+    required: true,
+    default: Date.now(),
+    immutable: true,
+  },
 });
 export default model<DatabaseArticle>('Article', ArticleSchema);
