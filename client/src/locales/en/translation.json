@@ -1,6 +1,7 @@
 {
   "translation": {
-    "changeTheme": "Change theme"
+    "changeTheme": "Change theme",
+    "selectLanguage": "Select language"
   },
   "navbar": {
     "home": "Home",

@@ -22,9 +22,11 @@ const Pagination = ({
     siblingCount,
     pageSize,
   });
-  if (!paginationRange) return null;
-  if (currentPage === 0 || paginationRange.length < 2) {
-    console.log(paginationRange);
+  if (!paginationRange) {
+    return null;
+  }
+
+  if (currentPage === 0) {
     return null;
   }
 
@@ -55,8 +57,13 @@ const Pagination = ({
         <div className='arrow left' />
       </li>
       {paginationRange.map((pageNumber) => {
+        const key = Math.random().toPrecision(20);
         if (pageNumber === DOTS) {
-          return <li className='pagination-item dots'>&#8230;</li>;
+          return (
+            <li className='pagination-item dots' key={key}>
+              &#8230;
+            </li>
+          );
         }
 
         return (
@@ -64,7 +71,8 @@ const Pagination = ({
             className={classnames('pagination-item', {
               selected: pageNumber === currentPage,
             })}
-            onClick={() => onPageChange(pageNumber as any)}>
+            onClick={() => onPageChange(pageNumber as any)}
+            key={key}>
             {pageNumber}
           </li>
         );

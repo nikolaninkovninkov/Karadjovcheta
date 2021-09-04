@@ -1,0 +1,38 @@
+.news {
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-top: 82px;
+  * {
+    font-family: Montserrat, sans-serif;
+  }
+  .pagination {
+    position: fixed;
+    bottom: 0;
+    align-self: center;
+  }
+  &-article-card {
+    padding: 2rem;
+    border: 1px solid lightgray;
+    border-top: none;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    .date {
+      color: hsl(0, 0%, 45%);
+    }
+  }
+  &-article {
+    max-width: 50vh;
+    overflow-wrap: break-word;
+  }
+  &-toolbar {
+    background-color: hsl(0, 0%, 70%);
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+  }
+}

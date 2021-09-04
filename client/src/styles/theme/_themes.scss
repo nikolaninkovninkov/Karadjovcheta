@@ -1,20 +1,6 @@
-$themes: (
-  dark-raspberry: (
-    primaryColor: #832160,
-    primaryTextColor: white,
-    backgroundColor: white,
-    backgroundTextColor: black,
-    borderColor: #cccccc,
-    errorColor: #b30000,
-    linkHoverColor: black,
-  ),
-  golden-yellow: (
-    primaryColor: #f5ba13,
-    primaryTextColor: white,
-    backgroundColor: white,
-    backgroundTextColor: black,
-    borderColor: #cccccc,
-    errorColor: #b30000,
-    linkHoverColor: black,
-  ),
-);
+$backgroundColorSecondary: #f5ba13;
+$backgroundColorPrimary: #ffffff;
+$textColorSecondary: #ffffff;
+$textColorPrimary: #000000;
+$errorColorPrimary: #b30000;
+$linkColorPrimary: #832160;

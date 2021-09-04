@@ -34,7 +34,7 @@ const authMiddleware = (
       username: (payload as JwtPayload & TokenData).username,
     }).then((user) => {
       if (!user) return res.status(400).json({ message: 'Invalid token' });
-      req.user = (user as any)._doc as DatabaseUser;
+      req.user = user.toObject() as DatabaseUser;
       next();
     });
   });

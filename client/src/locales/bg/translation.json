@@ -1,6 +1,7 @@
 {
   "translation": {
-    "changeTheme": "Смени цветове"
+    "changeTheme": "Смени цветове",
+    "selectLanguage": "Изберете език"
   },
   "navbar": {
     "home": "Начало",

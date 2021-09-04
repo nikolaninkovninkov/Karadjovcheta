@@ -1,42 +1,60 @@
 import express from 'express';
-import nanoid from '../lib/nanoid';
-import ArticleModel from '../models/ArticleModel';
-import UserModel from '../models/UserModel';
+import NewsArticleModel from '../models/NewsArticleModel';
 import ArticleData from '../types/ArticleData';
-import DatabaseArticle from '../types/database/DatabaseArticle';
 import DatabaseUser from '../types/database/DatabaseUser';
 import roleToPermissions from '../utils/roleToPermissions';
-import toClientArticle from '../utils/toClientArticle';
 import { Document } from 'mongoose';
-const toClientArticles = async (
-  articles: Array<DatabaseArticle & Document<any, any, DatabaseArticle>>,
-) => {
-  const clientArticles = await ArticleModel.populate(articles, 'author');
-  return clientArticles.map(toClientArticle);
-};
+import { validationResult } from 'express-validator';
+import toClientUser from '../utils/toClientUser';
+import PopulatedNewsArticle from '../types/database/PopulatedNewsArticle';
+
 async function getNews(req: express.Request, res: express.Response) {
   const params = req.query as {
     limit: string | undefined;
     offset: string | undefined;
+    id?: string;
   };
   if (!params.limit || !params.offset) {
     return res.status(400).json({ message: 'Limit and offset invalid' });
   }
   const [limit, offset] = [parseInt(params.limit), parseInt(params.offset)];
-  const articleCount = await ArticleModel.countDocuments();
+  const articleCount = await NewsArticleModel.countDocuments();
   if (offset >= articleCount) {
     return res.json([]);
   }
-  const articles = await ArticleModel.find({ type: 'news' })
+  const articles = await NewsArticleModel.find(
+    params.id ? { type: 'news', id: params.id } : { type: 'news' },
+  )
     .sort({
       dateCreated: -1,
     })
     .limit(limit)
     .skip(offset);
-  const newsArticles = await toClientArticles(articles);
-  res.status(200).json({ newsArticles, totalArticleCount: articleCount });
+  const populated = (await NewsArticleModel.populate(
+    articles,
+    'author',
+  )) as unknown as Array<
+    Document<any, any, PopulatedNewsArticle> & PopulatedNewsArticle
+  >;
+  res.status(200).json({
+    newsArticles: populated.map((article) => {
+      return {
+        ...article.toObject(),
+        author: toClientUser(
+          article.author as unknown as Document<any, any, DatabaseUser> &
+            DatabaseUser,
+          false,
+        ),
+      };
+    }),
+    totalArticleCount: articleCount,
+  });
 }
 async function createNewsArticle(req: express.Request, res: express.Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.json(errors);
+  }
   const user = req.user;
   if (!user) return;
   const permissions = roleToPermissions(user.role);
@@ -44,13 +62,18 @@ async function createNewsArticle(req: express.Request, res: express.Response) {
     return res.status(400).json({ message: 'Insufficient permissions' });
   }
   const articleData = req.body as ArticleData;
-  const article = new ArticleModel({
+  const article = new NewsArticleModel({
     type: 'news',
     author: user._id,
     ...articleData,
   });
   const savedArticle = await article.save();
-  const populated = await ArticleModel.populate(savedArticle, 'author');
-  res.status(200).json(toClientArticle(populated));
+  const populated = (
+    await NewsArticleModel.populate(savedArticle, 'author')
+  ).toObject() as unknown as PopulatedNewsArticle;
+  res.status(200).json({
+    ...populated,
+    author: toClientUser(populated.author, false),
+  });
 }
 export { getNews, createNewsArticle };

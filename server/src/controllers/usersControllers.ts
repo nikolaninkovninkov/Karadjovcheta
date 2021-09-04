@@ -91,7 +91,7 @@ async function loginController(req: express.Request, res: express.Response) {
 function getUserController(req: express.Request, res: express.Response) {
   const user = req.user as DatabaseUser;
   if (!user) return res.json(user);
-  const clientUser = toClientUser(user, true);
+  const clientUser = toClientUser(user, false);
   res.json(clientUser);
 }
 export { registerController, loginController, getUserController };

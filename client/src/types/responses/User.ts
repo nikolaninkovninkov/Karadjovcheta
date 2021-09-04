@@ -1,7 +1,9 @@
+import UserPermissions from './UserPermissions';
+
 export default interface User {
   createdAt: string;
-  email: string;
   name: string;
   updatedAt: string;
   username: string;
+  permissions: UserPermissions;
 }

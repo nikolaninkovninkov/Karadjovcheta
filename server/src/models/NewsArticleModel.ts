@@ -1,8 +1,8 @@
 import { model, Schema } from 'mongoose';
 import nanoid from '../lib/nanoid';
-import DatabaseArticle from '../types/database/DatabaseArticle';
+import DatabaseNewsArticle from '../types/database/DatabaseNewsArticle';
 import { v4 as uuid } from 'uuid';
-const ArticleSchema = new Schema<DatabaseArticle>({
+const NewsArticleSchema = new Schema<DatabaseNewsArticle>({
   id: {
     type: String,
     required: true,
@@ -26,4 +26,4 @@ const ArticleSchema = new Schema<DatabaseArticle>({
     immutable: true,
   },
 });
-export default model<DatabaseArticle>('Article', ArticleSchema);
+export default model<DatabaseNewsArticle>('NewsArticle', NewsArticleSchema);

@@ -3,6 +3,7 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as usersApi from '../api/users';
 import Loader from '../components/layout/Loader';
+import useDebug from '../hooks/useDebug';
 import useLocalStorage from '../hooks/useLocalStorage';
 import AuthContextType from '../types/contexts/AuthContextType';
 import LoginData from '../types/requests/LoginData';
@@ -15,6 +16,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<AxiosError>();
   const [loadingInitial, setLoadingInitial] = useState(true);
   const location = useLocation();
+  useDebug(user);
   useEffect(() => {
     setError(undefined);
   }, [location.pathname]);

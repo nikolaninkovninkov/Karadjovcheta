@@ -1,21 +1,17 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import useLocalStorage from '../hooks/useLocalStorage';
 import Login from './auth/Login';
 import Profile from './auth/Profile';
 import Register from './auth/Register';
 import Dashboard from './Dashboard';
 import Navbar from './layout/Navbar';
 import News from './news/News';
+import NewsArticle from './news/NewsArticle';
 function App() {
   const { user } = useAuth();
-  const [theme, setTheme] = useLocalStorage('theme', 'golden-yellow');
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
   return (
-    <div className={'app theme-' + theme}>
+    <div className='app'>
       <Route path='/register' exact>
         {user ? <Redirect to='/' /> : <Register />}
       </Route>
@@ -26,14 +22,20 @@ function App() {
         {user ? <Profile /> : <Redirect to='/login' />}
       </Route>
       <Route path='/' exact>
-        <Navbar></Navbar>
-        {user ? (
-          <Dashboard {...{ setTheme, theme }} />
-        ) : (
-          <Redirect to='/login' />
-        )}
+        <Navbar />
+        {user ? <Dashboard /> : <Redirect to='/login' />}
       </Route>
-      <Route path='/news' exact component={News}></Route>
+      <Route
+        path='/news'
+        exact
+        component={() => (
+          <>
+            <Navbar />
+            <News />
+          </>
+        )}
+      />
+      <Route path='/news/:id' exact component={NewsArticle}></Route>
     </div>
   );
 }

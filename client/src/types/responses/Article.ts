@@ -6,4 +6,5 @@ export default interface Article {
   title: string;
   content: string;
   id: string;
+  dateCreated: number;
 }
