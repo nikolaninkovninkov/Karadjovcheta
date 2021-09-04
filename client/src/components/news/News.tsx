@@ -1,8 +1,12 @@
+import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import * as newsApi from '../../api/news';
+import useAuth from '../../hooks/useAuth';
+import NewsArticleData from '../../types/requests/NewsArticleData';
 import Article from '../../types/responses/Article';
 import Pagination from '../layout/Pagination';
 import NewsArticleCard from './NewsArticleCard';
+import NewsCreateArticle from './NewsCreateArticle';
 import NewsToolbar from './NewsToolbar';
 const LIMIT = 10;
 export default function News() {
@@ -11,25 +15,65 @@ export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState({} as AxiosError);
+  const [currentTab, setCurrentTab] = useState('news');
+  const { token } = useAuth();
   useEffect(() => {
     setLoading(true);
-    newsApi.getNewsArticles(LIMIT, offset).then((response) => {
-      setArticles(response.data.newsArticles);
-      setTotalCount(response.data.totalArticleCount);
-      setLoading(false);
-    });
+    newsApi
+      .getNewsArticles(LIMIT, offset)
+      .then((response) => {
+        setArticles(response.data.newsArticles);
+        setTotalCount(response.data.totalArticleCount);
+        setLoading(false);
+      })
+      .catch((err) => setError(err));
   }, [offset]);
+  async function getArticles() {
+    newsApi
+      .getNewsArticles(LIMIT, offset)
+      .then((response) => {
+        setArticles(response.data.newsArticles);
+        setTotalCount(response.data.totalArticleCount);
+      })
+      .catch((err) => setError(err));
+  }
+  async function createArticle(articleData: NewsArticleData) {
+    newsApi
+      .postNewsArticle(articleData, token)
+      .then(getArticles)
+      .catch((err) => setError(err));
+  }
   useEffect(() => {
     setOffset((currentPage - 1) * LIMIT);
   }, [currentPage]);
+  useEffect(() => {
+    setOffset(0);
+  }, [currentTab]);
+  function renderTab() {
+    switch (currentTab) {
+      case 'news':
+        return articles && articles.length > 0 ? (
+          articles.map((article) => (
+            <NewsArticleCard {...{ article }} key={article.id} />
+          ))
+        ) : (
+          <div>No articles...</div>
+        );
+      case 'create':
+        return (
+          <NewsCreateArticle error={error} createArticle={createArticle} />
+        );
+    }
+  }
   return (
     <div className='news'>
-      <NewsToolbar></NewsToolbar>
+      <NewsToolbar
+        setCurrentTab={setCurrentTab}
+        currentTab={currentTab}></NewsToolbar>
       {!loading && (
         <>
-          {articles.map((article) => (
-            <NewsArticleCard {...{ article }} key={article.id} />
-          ))}
+          {renderTab()}
           <Pagination
             totalCount={totalCount}
             pageSize={LIMIT}

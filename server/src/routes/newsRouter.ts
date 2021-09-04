@@ -4,9 +4,9 @@ import authMiddleware from '../middleware/authMiddleware';
 import { body } from 'express-validator';
 const titleCheck = body(
   'title',
-  'Title must be between 10 and 100 characters long',
+  'Title must be a maximum of 100 and a minimum of 10 characters long',
 ).isLength({ min: 10, max: 100 });
-const contentCheck = body('content', 'Content must be defined').notEmpty();
+const contentCheck = body('content', "Content mustn't be empty").notEmpty();
 const createChecks = [titleCheck, contentCheck];
 const router = Router();
 router.get('/', getNews);

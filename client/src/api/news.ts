@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import ArticleData from '../types/requests/ArticleData';
+import NewsArticleData from '../types/requests/NewsArticleData';
 import Article from '../types/responses/Article';
 
 async function getNewsArticles(limit: number, offset: number, id?: string) {
@@ -15,11 +15,14 @@ async function getNewsArticles(limit: number, offset: number, id?: string) {
   }>;
 }
 
-async function postNewsArticle(articleData: ArticleData) {
+async function postNewsArticle(articleData: NewsArticleData, token: string) {
   const axiosRequestConfig: AxiosRequestConfig = {
     url: '/api/news',
     method: 'POST',
     data: articleData,
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
   };
   const response = await axios(axiosRequestConfig);
   return response as AxiosResponse<Article[]>;

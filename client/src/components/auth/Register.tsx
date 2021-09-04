@@ -33,7 +33,7 @@ export default function Register() {
     if (getFirstPropertyValue(errors)) {
       return getFirstPropertyValue(errors);
     }
-    if (error?.response?.data.message) return error?.response?.data.message;
+    if (error?.response?.data.message) return error.response.data.message;
     if (error) return 'An unexpected error has occurred. Please try again.';
   }
   return (

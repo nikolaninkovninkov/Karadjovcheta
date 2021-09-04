@@ -29,17 +29,19 @@ async function getNews(req: express.Request, res: express.Response) {
       dateCreated: -1,
     })
     .limit(limit)
-    .skip(offset);
-  const populated = (await NewsArticleModel.populate(
-    articles,
-    'author',
-  )) as unknown as Array<
-    Document<any, any, PopulatedNewsArticle> & PopulatedNewsArticle
-  >;
+    .skip(offset)
+    .populate('author')
+    .lean();
+  // const populated = (await NewsArticleModel.populate(
+  //   articles,
+  //   'author',
+  // )) as unknown as Array<
+  //   Document<any, any, PopulatedNewsArticle> & PopulatedNewsArticle
+  // >;
   res.status(200).json({
-    newsArticles: populated.map((article) => {
+    newsArticles: articles.map((article) => {
       return {
-        ...article.toObject(),
+        ...article,
         author: toClientUser(
           article.author as unknown as Document<any, any, DatabaseUser> &
             DatabaseUser,

@@ -9,4 +9,5 @@ export default interface AuthContextType {
   logout: () => void;
   register: (registerData: RegisterData) => Promise<void>;
   error: AxiosError | undefined;
+  token: string;
 }

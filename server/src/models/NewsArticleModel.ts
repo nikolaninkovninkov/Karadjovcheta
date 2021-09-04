@@ -22,7 +22,7 @@ const NewsArticleSchema = new Schema<DatabaseNewsArticle>({
   dateCreated: {
     type: Number,
     required: true,
-    default: Date.now(),
+    default: Date.now,
     immutable: true,
   },
 });
