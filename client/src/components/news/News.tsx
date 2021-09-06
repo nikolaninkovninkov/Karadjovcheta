@@ -41,7 +41,10 @@ export default function News() {
   async function createArticle(articleData: NewsArticleData) {
     newsApi
       .postNewsArticle(articleData, token)
-      .then(getArticles)
+      .then(() => {
+        getArticles();
+        setCurrentTab('news');
+      })
       .catch((err) => setError(err));
   }
   useEffect(() => {
