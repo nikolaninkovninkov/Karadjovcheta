@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, match } from 'react-router-dom';
+import { match } from 'react-router-dom';
 import { getNewsArticles } from '../../api/news';
 import Article from '../../types/responses/Article';
+import Loader from '../layout/Loader';
 export default function NewsArticle({
   match,
 }: {
@@ -17,17 +18,19 @@ export default function NewsArticle({
       setLoading(false);
     });
   }, [id]);
+  function renderContent() {
+    const paragraphs = article.content.split(/\n/);
+    return paragraphs.map((p) => <p>{p}</p>);
+  }
+  if (loading) return <Loader></Loader>;
   return (
-    <div className='news-article'>
-      {!loading && (
-        <>
-          <h1>{article.title}</h1>
-          <p>{article.content}</p>
-          <p>{new Date(article.dateCreated).toLocaleDateString()}</p>
-          <p>By {article?.author.username}</p>
-          <Link to='/news'>&larr;Back to news</Link>
-        </>
-      )}
+    <div className='article'>
+      <h1>{article.title}</h1>
+      <h2>
+        By {article?.author.username},{' '}
+        {new Date(article.dateCreated).toLocaleDateString()}
+      </h2>
+      {renderContent()}
     </div>
   );
 }

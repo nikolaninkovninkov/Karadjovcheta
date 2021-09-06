@@ -7,12 +7,11 @@ const NewsArticleSchema = new Schema<DatabaseNewsArticle>({
     type: String,
     required: true,
     unique: true,
-    default: () => nanoid(),
+    default: nanoid,
     immutable: true,
   },
   title: { type: String, required: true },
   content: { type: String, required: true },
-  type: { type: String, required: true, enum: ['news'], immutable: true },
   author: {
     type: Schema.Types.ObjectId,
     required: true,

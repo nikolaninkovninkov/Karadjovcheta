@@ -9,7 +9,7 @@ const authMiddleware = (
   next: express.NextFunction,
 ) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader) {
+  if (!authHeader || !authHeader.split('Bearer ')[1]) {
     return res.status(400).json({ message: 'Invalid token' });
   }
   const token = authHeader

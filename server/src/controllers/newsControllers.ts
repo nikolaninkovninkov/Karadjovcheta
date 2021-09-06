@@ -1,6 +1,6 @@
 import express from 'express';
 import NewsArticleModel from '../models/NewsArticleModel';
-import ArticleData from '../types/ArticleData';
+import NewsArticleData from '../types/NewsArticleData';
 import DatabaseUser from '../types/database/DatabaseUser';
 import roleToPermissions from '../utils/roleToPermissions';
 import { Document } from 'mongoose';
@@ -23,7 +23,7 @@ async function getNews(req: express.Request, res: express.Response) {
     return res.json([]);
   }
   const articles = await NewsArticleModel.find(
-    params.id ? { type: 'news', id: params.id } : { type: 'news' },
+    params.id ? { id: params.id } : {},
   )
     .sort({
       dateCreated: -1,
@@ -63,9 +63,8 @@ async function createNewsArticle(req: express.Request, res: express.Response) {
   if (!permissions.news.canPost) {
     return res.status(400).json({ message: 'Insufficient permissions' });
   }
-  const articleData = req.body as ArticleData;
+  const articleData = req.body as NewsArticleData;
   const article = new NewsArticleModel({
-    type: 'news',
     author: user._id,
     ...articleData,
   });

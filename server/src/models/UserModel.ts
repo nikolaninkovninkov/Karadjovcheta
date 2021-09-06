@@ -1,7 +1,5 @@
 import { Schema, model } from 'mongoose';
 import DatabaseUser from '../types/database/DatabaseUser';
-import nanoid from '../lib/nanoid';
-// const { Embedded } = Schema.Types;
 const userSchema = new Schema<DatabaseUser>(
   {
     name: {
@@ -19,7 +17,7 @@ const userSchema = new Schema<DatabaseUser>(
     role: {
       type: String,
       required: true,
-      enum: ['admin', 'user', 'moderator'],
+      enum: ['admin', 'user', 'class-member', 'moderator-class-member'],
       default: 'user',
     },
   },

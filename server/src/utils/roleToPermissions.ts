@@ -5,15 +5,40 @@ const permissions: Record<UserRole, UserPermissions> = {
     news: {
       canPost: false,
     },
+    dashboard: {
+      canAccessStudentDashboard: false,
+      canAccessStudentModeratorDashboard: false,
+      canAccessAdminDashboard: false,
+    },
   },
-  moderator: {
+  student: {
     news: {
       canPost: true,
+    },
+    dashboard: {
+      canAccessStudentDashboard: true,
+      canAccessStudentModeratorDashboard: false,
+      canAccessAdminDashboard: false,
+    },
+  },
+  'moderator-student': {
+    news: {
+      canPost: true,
+    },
+    dashboard: {
+      canAccessStudentDashboard: true,
+      canAccessStudentModeratorDashboard: true,
+      canAccessAdminDashboard: false,
     },
   },
   admin: {
     news: {
       canPost: true,
+    },
+    dashboard: {
+      canAccessStudentDashboard: true,
+      canAccessStudentModeratorDashboard: true,
+      canAccessAdminDashboard: true,
     },
   },
 };

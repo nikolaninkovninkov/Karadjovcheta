@@ -4,10 +4,10 @@ import useAuth from '../hooks/useAuth';
 import Login from './auth/Login';
 import Profile from './auth/Profile';
 import Register from './auth/Register';
-import Dashboard from './Dashboard';
 import Navbar from './layout/Navbar';
 import News from './news/News';
 import NewsArticle from './news/NewsArticle';
+import Home from './pages/Home';
 function App() {
   const { user } = useAuth();
   return (
@@ -23,7 +23,7 @@ function App() {
       </Route>
       <Route path='/' exact>
         <Navbar />
-        {user ? <Dashboard /> : <Redirect to='/login' />}
+        <Home />
       </Route>
       <Route
         path='/news'

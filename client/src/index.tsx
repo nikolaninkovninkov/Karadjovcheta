@@ -11,26 +11,13 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 axios.defaults.baseURL = process.env.REACT_APP_NODE_SERVER;
 ReactDOM.render(
   <React.StrictMode>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}>
-      <Suspense
-        fallback={
-          <div>
-            <Loader></Loader>
-          </div>
-        }>
-        <Router>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
-        </Router>
-      </Suspense>
-    </div>
+    <Suspense fallback={<Loader></Loader>}>
+      <Router>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </Router>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );

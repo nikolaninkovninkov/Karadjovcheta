@@ -15,9 +15,9 @@ export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState({} as AxiosError);
+  const [error, setError] = useState(undefined as AxiosError | undefined);
   const [currentTab, setCurrentTab] = useState('news');
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   useEffect(() => {
     setLoading(true);
     newsApi
@@ -61,8 +61,10 @@ export default function News() {
           <div>No articles...</div>
         );
       case 'create':
-        return (
+        return user?.permissions.news.canPost ? (
           <NewsCreateArticle error={error} createArticle={createArticle} />
+        ) : (
+          <div>You don't have proper permissions or aren't logged in</div>
         );
     }
   }
@@ -74,16 +76,18 @@ export default function News() {
       {!loading && (
         <>
           {renderTab()}
-          <Pagination
-            totalCount={totalCount}
-            pageSize={LIMIT}
-            currentPage={currentPage}
-            onPageChange={(pageNumber) => {
-              setCurrentPage(pageNumber);
-            }}
-            siblingCount={0}
-            className='pagination'
-          />
+          {currentTab === 'news' && (
+            <Pagination
+              totalCount={totalCount}
+              pageSize={LIMIT}
+              currentPage={currentPage}
+              onPageChange={(pageNumber) => {
+                setCurrentPage(pageNumber);
+              }}
+              siblingCount={0}
+              className='pagination'
+            />
+          )}
         </>
       )}
     </div>

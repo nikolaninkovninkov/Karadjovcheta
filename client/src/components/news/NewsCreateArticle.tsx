@@ -8,7 +8,7 @@ export default function NewsCreateArticle({
   error,
   createArticle,
 }: {
-  error: AxiosError;
+  error: AxiosError | undefined;
   createArticle: (articleData: NewsArticleData) => Promise<void>;
 }) {
   const createNewArticleSchema = yup.object().shape({
@@ -36,12 +36,15 @@ export default function NewsCreateArticle({
         initialValues={{ title: '', content: '' }}
         validationSchema={createNewArticleSchema}>
         {({ errors, touched }) => (
-          <Form>
+          <Form className='form'>
+            <div className='heading'>
+              <h1>Create a new article</h1>
+            </div>
             <label htmlFor='title'>Title</label>
-            <Field name='title' />
+            <Field name='title' className='field' />
             <label htmlFor='content'>Content</label>
-            <Field name='content' />
-            {getDisplayError(errors)}
+            <Field as='textarea' name='content' className='field' />
+            <div className='error'>{getDisplayError(errors)}</div>
             <button type='submit'>Submit</button>
           </Form>
         )}

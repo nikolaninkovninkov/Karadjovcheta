@@ -7,7 +7,9 @@ import {
 } from '../controllers/usersControllers';
 import authMiddleware from '../middleware/authMiddleware';
 const router = Router();
-const emailCheck = body('email', 'Invalid email addess').isEmail();
+const emailCheck = body('email', 'Invalid email addess')
+  .isEmail()
+  .normalizeEmail();
 const nameCheck = body('name', 'Name field empty').notEmpty();
 const usernameCheck = body(
   'username',
