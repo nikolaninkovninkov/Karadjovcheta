@@ -4,8 +4,7 @@ import useAuth from '../hooks/useAuth';
 import Login from './auth/Login';
 import Profile from './auth/Profile';
 import Register from './auth/Register';
-import Dashboard from './dashboard/Dashboard';
-import Navbar from './layout/Navbar';
+import Navbar from './layout/navbar/Navbar';
 import News from './news/News';
 import NewsArticle from './news/NewsArticle';
 import Home from './pages/Home';
@@ -37,8 +36,14 @@ function App() {
         )}
       />
       <Route path='/news/:id' exact component={NewsArticle}></Route>
-      <Route path='/dashboard' exact>
-        {user ? <Dashboard /> : <Redirect to='login' />}
+      <Route path='/student-dashboard' exact>
+        {user ? (
+          <>
+            <Navbar />
+          </>
+        ) : (
+          <Redirect to='login' />
+        )}
       </Route>
     </div>
   );

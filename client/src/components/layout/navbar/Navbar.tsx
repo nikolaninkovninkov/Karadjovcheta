@@ -1,15 +1,18 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
+import useToggle from '../../../hooks/useToggle';
+import MenuIcon from '@material-ui/icons/Menu';
 export default function Navbar() {
   const [t] = useTranslation('navbar');
   const { user } = useAuth();
+  const [mobileShow, toggleMobileShow] = useToggle(false);
   return (
-    <header>
+    <div className='navbar'>
       <h1 className='logo'>Karadjovcheta</h1>
-      <input type='checkbox' id='nav-toggle' className='nav-toggle' />
-      <nav>
+      <nav className={classNames({ show: mobileShow })}>
         <ul>
           <li>
             <Link to='/' className='link' children={t('home')} />
@@ -24,11 +27,25 @@ export default function Navbar() {
               <Link className='button' to='/login' children={t('login')} />
             )}
           </li>
+          <li>
+            {user && (
+              <Link
+                to='/dashboard'
+                className='link'
+                children={t('dashboard')}
+              />
+            )}
+          </li>
         </ul>
       </nav>
-      <label htmlFor='nav-toggle' className='nav-toggle-label'>
-        <span></span>
-      </label>
-    </header>
+      <button
+        className='nav-toggle-label'
+        onClick={() => {
+          toggleMobileShow();
+        }}>
+        <MenuIcon fontSize='large' className='hamburger' />
+        <span />
+      </button>
+    </div>
   );
 }

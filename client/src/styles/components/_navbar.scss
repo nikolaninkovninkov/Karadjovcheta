@@ -1,6 +1,6 @@
 @use '../theme';
 @use '../common';
-header {
+.navbar {
   background: theme.$backgroundColorSecondary;
   text-align: center;
   position: fixed;
@@ -16,19 +16,9 @@ header {
   }
 }
 .nav-toggle {
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
-  &:checked {
-    ~ nav {
-      transform: scale(1, 1);
-      background-color: theme.$backgroundColorSecondary;
-      a {
-        opacity: 1;
-        transition: opacity 250ms ease-in-out 250ms;
-      }
-    }
-  }
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 
 .nav-toggle-label {
@@ -39,34 +29,36 @@ header {
   height: 100%;
   display: flex;
   align-items: center;
+  background-color: inherit;
+  border: none;
   @media screen and (min-width: 800px) {
     display: none;
   }
-  .nav-toggle:focus ~ & {
-    outline: 3px solid rgba(lightblue, 0.75);
-  }
-  span {
-    &,
-    &::before,
-    &::after {
-      display: block;
-      background: white;
-      height: 2px;
-      width: 2em;
-      border-radius: 2px;
-      position: relative;
-    }
-    &::after,
-    &::before {
-      content: '';
-      position: absolute;
-    }
-    &::before {
-      bottom: 7px;
-    }
-    &::after {
-      top: 7px;
-    }
+  // span {
+  //   &,
+  //   &::before,
+  //   &::after {
+  //     display: block;
+  //     background: white;
+  //     height: 2px;
+  //     width: 2em;
+  //     border-radius: 2px;
+  //     position: relative;
+  //   }
+  //   &::after,
+  //   &::before {
+  //     content: '';
+  //     position: absolute;
+  //   }
+  //   &::before {
+  //     bottom: 7px;
+  //   }
+  //   &::after {
+  //     top: 7px;
+  //   }
+  // }
+  .hamburger {
+    color: theme.$textColorSecondary;
   }
 }
 
@@ -80,13 +72,20 @@ nav {
   transform: scale(1, 0);
   transform-origin: top;
   transition: transform 400ms ease-in-out;
+  &.show {
+    transform: scale(1, 1);
+    .link {
+      opacity: 1;
+      transition: opacity 250ms ease-in-out;
+    }
+  }
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
   }
   li {
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     margin-left: 1em;
   }
   .link {
