@@ -6,9 +6,10 @@
   "navbar": {
     "home": "Home",
     "news": "News",
-    "profile": "Profile"
+    "profile": "Profile",
+    "login": "Login"
   },
-  "auth-form": {
+  "auth": {
     "login": "Login",
     "username": "Username",
     "email": "Email",

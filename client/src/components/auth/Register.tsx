@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 export default function Register() {
   const { register, error } = useAuth();
-  const [t] = useTranslation('auth-form');
+  const [t] = useTranslation('auth');
   const registerSchema = yup.object().shape({
     name: yup.string().required('Name field is required'),
     username: yup

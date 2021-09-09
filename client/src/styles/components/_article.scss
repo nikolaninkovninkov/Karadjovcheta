@@ -1,10 +1,20 @@
 .article {
+  $breakpoints: 480px, 320px, 280px;
   display: grid;
   grid-template-columns: 1fr 1fr 10px 440px 10px 1fr 1fr;
   line-height: 1.4;
   font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
-  height: 100vh;
+  height: 100%;
   text-align: left;
+  @media only screen and (max-width: 480px) {
+    grid-template-columns: 1fr 1fr 10px 300px 10px 1fr 1fr;
+  }
+  @media only screen and (max-width: 320px) {
+    grid-template-columns: 1fr 1fr 10px 260px 10px 1fr 1fr;
+  }
+  @media only screen and (max-width: 280px) {
+    grid-template-columns: 1fr 1fr 10px 220px 10px 1fr 1fr;
+  }
   > * {
     grid-column: 4;
     min-width: 0;
@@ -19,6 +29,9 @@
     margin: 30px 20px;
     color: #666;
     font-size: 0.8em;
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
   }
   > blockquote {
     grid-column: 3 / span 2;

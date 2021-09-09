@@ -1,6 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import AddIcon from '@material-ui/icons/Add';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 export default function NewsToolbar({
   setCurrentTab,
   currentTab,
@@ -17,15 +15,17 @@ export default function NewsToolbar({
           }}
           className='back-to-news'
           title='Back to News'>
-          <ArrowBackIcon />
+          Back to news
         </div>
       )}
-      <div
-        onClick={() => setCurrentTab('create')}
-        className='create-article'
-        title='Create article'>
-        <AddIcon />
-      </div>
+      {currentTab !== 'create' && (
+        <button
+          onClick={() => setCurrentTab('create')}
+          className='create-article'
+          title='Create article'>
+          Create article
+        </button>
+      )}
     </div>
   );
 }

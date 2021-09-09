@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Field, Form, Formik, FormikErrors } from 'formik';
 import { object, string } from 'yup';
 import useAuth from '../../hooks/useAuth';
@@ -6,9 +6,13 @@ import LoginData from '../../types/requests/LoginData';
 import getFirstPropertyValue from '../../utils/getFirstProperty';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import quake from '../../utils/quake';
 export default function Login() {
   const { login, error } = useAuth();
-  const [t] = useTranslation('auth-form');
+  useEffect(() => {
+    if (error) quake();
+  }, [error]);
+  const [t] = useTranslation('auth');
   const LoginSchema = object().shape({
     username: string().required('Username/Email field is required'),
     password: string().required('Password field is required'),

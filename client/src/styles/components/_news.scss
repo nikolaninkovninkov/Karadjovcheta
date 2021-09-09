@@ -1,4 +1,6 @@
 @use '../theme';
+@use '../common';
+@use 'sass:color';
 .news {
   display: flex;
   flex-direction: column;
@@ -25,18 +27,35 @@
     .date {
       color: hsl(0, 0%, 45%);
     }
+
+    .read-more {
+      text-decoration: none;
+      color: #551a8b;
+    }
   }
 
   &-toolbar {
-    background-color: hsl(0, 0%, 70%);
+    background-color: white;
     display: flex;
     width: 100%;
     padding: 1rem;
+    gap: 10px;
+    $actionButtonColor: #1a8917;
     .create-article {
-      cursor: pointer;
+      @include common.pillbutton(
+        $actionButtonColor,
+        white,
+        white,
+        $actionButtonColor
+      );
     }
     .back-to-news {
-      cursor: pointer;
+      @include common.pillbutton(
+        $actionButtonColor,
+        white,
+        white,
+        $actionButtonColor
+      );
     }
   }
   &-create-article {
@@ -73,17 +92,13 @@
         font-weight: bold;
       }
       button {
-        color: theme.$textColorSecondary;
-        background-color: theme.$paletteColorSecondary;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
+        @include common.pillbutton(
+          theme.$paletteColorSecondary,
+          theme.$textColorSecondary,
+          color.adjust(theme.$paletteColorSecondary, $lightness: 5%),
+          theme.$textColorSecondary
+        );
         width: 100%;
-        border-radius: 100000px;
-        &:hover {
-          opacity: 0.8;
-        }
       }
     }
   }

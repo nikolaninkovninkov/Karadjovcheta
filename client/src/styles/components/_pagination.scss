@@ -1,9 +1,13 @@
 @use "sass:math";
+@use '../theme';
 .pagination-container {
   display: flex;
   list-style-type: none;
   max-width: 100%;
   flex-wrap: wrap;
+  padding: 0;
+  background-color: theme.$backgroundColorPrimary;
+
   .pagination-item {
     padding: 0 12px;
     height: 32px;
@@ -17,7 +21,6 @@
     line-height: 1.43;
     font-size: 0.8rem;
     min-width: 32px;
-
     &.dots:hover {
       background-color: transparent;
       cursor: default;

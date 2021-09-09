@@ -1,0 +1,30 @@
+@use 'sass:math';
+@use 'sass:list';
+@keyframes quake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes boogie {
+  $colors: #ff0000, #ffa500, #ffff00, #008000, #0000ff, #4b0082, #8f00ff;
+  $colorsLength: list.length($colors);
+  @for $index from 1 through $colorsLength {
+    $color: list.nth($colors, $index);
+    #{math.round(math.percentage(math.div($index - 1, $colorsLength)))} {
+      background-color: $color;
+    }
+  }
+  100% {
+    background-color: list.nth($colors, 1);
+  }
+}

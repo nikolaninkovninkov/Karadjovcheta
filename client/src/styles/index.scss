@@ -1,10 +1,13 @@
 @use 'components';
 @use 'common';
+@use 'animations';
 *,
 *::after,
 *::before {
   box-sizing: border-box;
 }
 body {
+  position: relative;
   margin: 0;
+  padding: 0;
 }

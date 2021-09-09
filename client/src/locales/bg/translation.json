@@ -6,9 +6,10 @@
   "navbar": {
     "home": "Начало",
     "news": "Новини",
-    "profile": "Профил"
+    "profile": "Профил",
+    "login": "Влез"
   },
-  "auth-form": {
+  "auth": {
     "login": "Влез",
     "username": "Потребителско име",
     "email": "Имейл",
