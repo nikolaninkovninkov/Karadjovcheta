@@ -8,6 +8,7 @@ import toTokenData from '../utils/toTokenData';
 import { validationResult } from 'express-validator';
 import DatabaseUser from '../types/database/DatabaseUser';
 import toClientUser from '../utils/toClientUser';
+import timeout from '../utils/timeout';
 async function registerController(req: express.Request, res: express.Response) {
   const registerData = req.body as RegisterData;
   const user = new UserModel(registerData);
@@ -51,6 +52,7 @@ async function registerController(req: express.Request, res: express.Response) {
   );
 }
 async function loginController(req: express.Request, res: express.Response) {
+  await timeout(5000);
   const loginData = req.body as LoginData;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

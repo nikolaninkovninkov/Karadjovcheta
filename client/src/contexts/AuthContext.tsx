@@ -13,15 +13,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useLocalStorage('auth-token', '');
   const [user, setUser] = useState<User>();
   const [error, setError] = useState<AxiosError>();
-  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   useEffect(() => {
     setError(undefined);
   }, [location.pathname]);
   useEffect(() => {
     if (!token) {
-      return setLoadingInitial(false);
+      return setLoading(false);
     }
+    setLoading(true);
     usersApi
       .getUser(token)
       .then((response) => {
@@ -32,20 +33,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setToken('');
       })
       .finally(() => {
-        setLoadingInitial(false);
+        setLoading(false);
       });
   }, [token, setToken]);
   async function login(loginData: LoginData) {
+    setLoading(true);
     const response = await usersApi
       .login(loginData)
       .catch((err) => setError(err));
     setToken(typeof response?.data == 'string' ? response.data : '');
+    setLoading(false);
   }
   async function register(registerData: RegisterData) {
+    setLoading(true);
     const response = await usersApi
       .register(registerData)
       .catch((error) => setError(error));
     setToken(response?.data ?? '');
+    setLoading(false);
   }
   function logout() {
     setToken('');
@@ -56,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={
         { login, user, logout, register, error, token } as AuthContextType
       }>
-      {!loadingInitial ? children : <Loader />}
+      {!loading ? children : <Loader />}
     </AuthContext.Provider>
   );
 }
