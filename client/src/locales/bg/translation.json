@@ -8,7 +8,10 @@
     "news": "Новини",
     "profile": "Профил",
     "login": "Влез",
-    "dashboard": "Табло"
+    "dashboard": "Табло",
+    "student-dashboard": "Ученическо табло",
+    "moderator-dashboard": "Модераторско табло",
+    "admin-dashboard": "Админско табло"
   },
   "auth": {
     "login": "Влез",
@@ -21,11 +24,5 @@
     "no-account": "Нямате акаунт? Регистрирайте се",
     "already-account": "Вече имате акаунт? Влезте",
     "register": "Регистрирай се"
-  },
-  "dashboard": {
-    "studentDashboard": "Ученическо табло",
-    "studentModeratorDashboard": "Ученик-модераторско табло",
-    "adminDashboard": "Админско табло",
-    "no-dashboard": "Нямате отворени табла"
   }
 }

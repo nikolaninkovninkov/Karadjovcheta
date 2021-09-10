@@ -8,7 +8,10 @@
     "news": "News",
     "profile": "Profile",
     "login": "Login",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "student-dashboard": "Student dashboard",
+    "moderator-dashboard": "Moderator dashboard",
+    "admin-dashboard": "Admin dashboard"
   },
   "auth": {
     "login": "Login",
@@ -21,11 +24,5 @@
     "no-account": "Don't have an account? Register",
     "already-account": "Already have an account? Login",
     "register": "Register"
-  },
-  "dashboard": {
-    "studentDashboard": "Student dashboard",
-    "studentModeratorDashboard": "Student-moderator dashboard",
-    "adminDashboard": "Admin dashboard",
-    "no-dashboard": "You don't have an open dashboard"
   }
 }

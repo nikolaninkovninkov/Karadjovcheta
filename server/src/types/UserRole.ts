@@ -1,1 +1,1 @@
-type UserRole = 'moderator-student' | 'admin' | 'user' | 'student';
+type UserRole = 'student' | 'admin' | 'user' | 'moderator';

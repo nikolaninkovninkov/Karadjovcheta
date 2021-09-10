@@ -7,12 +7,15 @@
   $borderColor: null,
   $borderColorHover: null,
   $borderWidth: 1px,
-  $fontSize: 1rem
+  $fontSize: 1rem,
+  $noMargin: false
 ) {
   @include pillshape.pillshape();
   $animationDuration: 0.5s;
   padding: 14px 20px;
-  margin: 8px 0;
+  @if not $noMargin {
+    margin: 8px 0;
+  }
   border: $borderWidth solid $borderColor;
   cursor: pointer;
   background-color: $backgroundColor;

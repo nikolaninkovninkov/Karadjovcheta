@@ -1,13 +1,13 @@
 @use '../theme';
 @use '../common';
-.navbar {
+header {
   background: theme.$backgroundColorSecondary;
   text-align: center;
   position: fixed;
   z-index: 999;
   width: 100%;
   top: 0;
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 835px) {
     display: grid;
     grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
   }
@@ -21,7 +21,7 @@
   left: -9999px;
 }
 
-.nav-toggle-label {
+.mobile-toggle {
   position: absolute;
   top: 0;
   left: 0;
@@ -31,38 +31,15 @@
   align-items: center;
   background-color: inherit;
   border: none;
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 835px) {
     display: none;
   }
-  // span {
-  //   &,
-  //   &::before,
-  //   &::after {
-  //     display: block;
-  //     background: white;
-  //     height: 2px;
-  //     width: 2em;
-  //     border-radius: 2px;
-  //     position: relative;
-  //   }
-  //   &::after,
-  //   &::before {
-  //     content: '';
-  //     position: absolute;
-  //   }
-  //   &::before {
-  //     bottom: 7px;
-  //   }
-  //   &::after {
-  //     top: 7px;
-  //   }
-  // }
   .hamburger {
     color: theme.$textColorSecondary;
   }
 }
 
-nav {
+.navbar {
   position: absolute;
   text-align: left;
   top: 100%;
@@ -72,48 +49,64 @@ nav {
   transform: scale(1, 0);
   transform-origin: top;
   transition: transform 400ms ease-in-out;
+  > * {
+    margin-left: 1em;
+    margin-bottom: 2em;
+  }
   &.show {
     transform: scale(1, 1);
-    .link {
-      opacity: 1;
-      transition: opacity 250ms ease-in-out;
-    }
   }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  li {
-    margin-bottom: 2em;
-    margin-left: 1em;
-  }
-  .link {
+  &-link {
     color: theme.$textColorSecondary;
     text-decoration: none;
     font-size: 1.2rem;
     text-transform: uppercase;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 150ms ease-in-out;
+    cursor: pointer;
+    display: block;
     &:hover {
       color: theme.$textColorPrimary;
     }
   }
-  .button {
+  &-button {
     @include common.pillbutton(
       theme.$backgroundColorSecondary,
       theme.$textColorSecondary,
       theme.$textColorSecondary,
       theme.$backgroundColorSecondary,
       theme.$textColorSecondary,
-      theme.$textColorSecondary
+      theme.$textColorSecondary,
+      $noMargin: true
     );
-    text-decoration: none;
+    margin-left: 1em;
   }
-  @media screen and (min-width: 800px) {
-    // all: unset; /* this causes issues with Edge, since it's unsupported */
-
-    /* the following lines are not from my video, but add Edge support */
+  &-dropdown {
+    .fields {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0px 8px 16px 0px #00000033;
+    }
+    &-field {
+      cursor: pointer;
+      background-color: hsl(0, 0%, 100%);
+      padding: 1rem;
+      &:not(:last-child) {
+        border-bottom: 1px solid lightgray;
+      }
+      &:hover {
+        transition: background-color 0.25s;
+        background-color: hsl(0, 0%, 90%);
+      }
+    }
+    &:hover {
+      .fields {
+        display: block;
+      }
+    }
+  }
+  @media screen and (min-width: 835px) {
     position: relative;
     text-align: left;
     transition: none;
@@ -121,20 +114,15 @@ nav {
     background: none;
     top: initial;
     left: initial;
-    /* end Edge support stuff */
-
     grid-column: 3 / 4;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    ul {
-      display: flex;
-    }
-    li {
+    > * {
       margin-left: 3em;
       margin-bottom: 0;
     }
-    .link {
+    &-link {
       opacity: 1;
       position: relative;
       &::before {
@@ -158,7 +146,7 @@ nav {
 .logo {
   color: theme.$textColorSecondary;
   transform: scale(0.8);
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 835px) {
     grid-column: 2 / 3;
   }
 }

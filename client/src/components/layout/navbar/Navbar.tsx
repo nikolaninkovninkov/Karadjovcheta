@@ -1,51 +1,52 @@
 import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import useToggle from '../../../hooks/useToggle';
 import MenuIcon from '@material-ui/icons/Menu';
+import NavbarLink from './NavbarLink';
+import NavbarButton from './NavbarButton';
+import NavbarDropdown from './NavbarDropdown';
+import atLeastOneTruthy from '../../../utils/atLeastOneTruthy';
 export default function Navbar() {
   const [t] = useTranslation('navbar');
   const { user } = useAuth();
   const [mobileShow, toggleMobileShow] = useToggle(false);
   return (
-    <div className='navbar'>
+    <header>
       <h1 className='logo'>Karadjovcheta</h1>
-      <nav className={classNames({ show: mobileShow })}>
-        <ul>
-          <li>
-            <Link to='/' className='link' children={t('home')} />
-          </li>
-          <li>
-            <Link to='/news' className='link' children={t('news')} />
-          </li>
-          <li>
-            {user ? (
-              <Link to='/profile' className='link' children={t('profile')} />
-            ) : (
-              <Link className='button' to='/login' children={t('login')} />
-            )}
-          </li>
-          <li>
-            {user && (
-              <Link
-                to='/dashboard'
-                className='link'
-                children={t('dashboard')}
-              />
-            )}
-          </li>
-        </ul>
+      <nav className={classNames({ navbar: true, show: mobileShow })}>
+        <NavbarLink to='/' text={t('home')} />
+        <NavbarLink to='/news' text={t('news')} />
+        <NavbarLink to='/profile' text={t('profile')} show={!!user} />
+        <NavbarButton to='/login' text={t('login')} show={!user} />
+        {!!user && (
+          <NavbarDropdown
+            text={t('dashboard')}
+            show={!!user}
+            to='/dashboard'
+            showFields={user && atLeastOneTruthy(user.permissions.dashboard)}>
+            <NavbarDropdown.Field
+              text={t('student-dashboard')}
+              to='/student-dashboard'
+              show={user.permissions.dashboard.canAccessStudentDashboard}
+            />
+            <NavbarDropdown.Field
+              text={t('moderator-dashboard')}
+              to='/moderator-dashboard'
+              show={user.permissions.dashboard.canAccessModeratorDashboard}
+            />
+            <NavbarDropdown.Field
+              text={t('admin-dashboard')}
+              to='/admin-dashboard'
+              show={user.permissions.dashboard.canAccessAdminDashboard}
+            />
+          </NavbarDropdown>
+        )}
       </nav>
-      <button
-        className='nav-toggle-label'
-        onClick={() => {
-          toggleMobileShow();
-        }}>
+      <button className='mobile-toggle' onClick={() => toggleMobileShow()}>
         <MenuIcon fontSize='large' className='hamburger' />
-        <span />
       </button>
-    </div>
+    </header>
   );
 }

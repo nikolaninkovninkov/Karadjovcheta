@@ -7,7 +7,7 @@ const permissions: Record<UserRole, UserPermissions> = {
     },
     dashboard: {
       canAccessStudentDashboard: false,
-      canAccessStudentModeratorDashboard: false,
+      canAccessModeratorDashboard: false,
       canAccessAdminDashboard: false,
     },
   },
@@ -17,17 +17,17 @@ const permissions: Record<UserRole, UserPermissions> = {
     },
     dashboard: {
       canAccessStudentDashboard: true,
-      canAccessStudentModeratorDashboard: false,
+      canAccessModeratorDashboard: false,
       canAccessAdminDashboard: false,
     },
   },
-  'moderator-student': {
+  moderator: {
     news: {
       canPost: true,
     },
     dashboard: {
       canAccessStudentDashboard: true,
-      canAccessStudentModeratorDashboard: true,
+      canAccessModeratorDashboard: true,
       canAccessAdminDashboard: false,
     },
   },
@@ -37,7 +37,7 @@ const permissions: Record<UserRole, UserPermissions> = {
     },
     dashboard: {
       canAccessStudentDashboard: true,
-      canAccessStudentModeratorDashboard: true,
+      canAccessModeratorDashboard: true,
       canAccessAdminDashboard: true,
     },
   },
