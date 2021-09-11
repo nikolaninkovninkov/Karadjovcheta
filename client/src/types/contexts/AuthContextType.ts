@@ -10,4 +10,5 @@ export default interface AuthContextType {
   register: (registerData: RegisterData) => Promise<void>;
   error: AxiosError | undefined;
   token: string;
+  loading: boolean;
 }

@@ -52,7 +52,6 @@ async function registerController(req: express.Request, res: express.Response) {
   );
 }
 async function loginController(req: express.Request, res: express.Response) {
-  await timeout(5000);
   const loginData = req.body as LoginData;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -64,9 +63,7 @@ async function loginController(req: express.Request, res: express.Response) {
   );
   if (!foundUser) {
     return res.status(400).json({
-      message: `No account was fount with that ${
-        isEmail ? 'email' : 'username'
-      }. Maybe you haven't registered yet?`,
+      message: `no-account-${isEmail ? 'email' : 'username'}`,
     });
   }
   const isPasswordMatch = await bcrypt.compare(
@@ -74,7 +71,7 @@ async function loginController(req: express.Request, res: express.Response) {
     foundUser.password,
   );
   if (!isPasswordMatch) {
-    return res.status(400).json({ message: 'Invalid credentials' });
+    return res.status(400).json({ message: 'wrong-password' });
   }
   if (!process.env.JWT_SECRET) {
     res.json({ message: 'Server error' });

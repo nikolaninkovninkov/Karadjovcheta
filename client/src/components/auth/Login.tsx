@@ -14,15 +14,15 @@ export default function Login() {
   }, [error]);
   const [t] = useTranslation('auth');
   const LoginSchema = object().shape({
-    username: string().required('Username/Email field is required'),
-    password: string().required('Password field is required'),
+    username: string().required(t('username-email-field-required')),
+    password: string().required(t('password-field-required')),
   });
   function getDisplayError(errors: FormikErrors<LoginData>) {
     if (getFirstPropertyValue(errors)) {
       return getFirstPropertyValue(errors);
     }
-    if (error?.response?.data.message) return error?.response?.data.message;
-    if (error) return 'An unexpected error has occurred. Please try again.';
+    if (error?.response?.data.message) return t(error?.response?.data.message);
+    if (error) return t('unexpected-error');
   }
   return (
     <div>

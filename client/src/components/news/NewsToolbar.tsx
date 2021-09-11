@@ -1,31 +1,25 @@
-import React, { Dispatch, SetStateAction } from 'react';
-export default function NewsToolbar({
+import React, { Dispatch, ReactNode, SetStateAction } from 'react';
+function NewsToolbarItem({
+  show = true,
+  children,
+}: {
+  show?: boolean;
+  children: ReactNode;
+}) {
+  return show ? <div className='news-toolbar-item'>{children}</div> : <></>;
+}
+function NewsToolbar({
   setCurrentTab,
   currentTab,
+  show = true,
+  children,
 }: {
   setCurrentTab: Dispatch<SetStateAction<string>>;
   currentTab: string;
+  show?: boolean;
+  children: ReactNode;
 }) {
-  return (
-    <div className='news-toolbar'>
-      {currentTab !== 'news' && (
-        <div
-          onClick={() => {
-            setCurrentTab('news');
-          }}
-          className='back-to-news'
-          title='Back to News'>
-          Back to news
-        </div>
-      )}
-      {currentTab !== 'create' && (
-        <button
-          onClick={() => setCurrentTab('create')}
-          className='create-article'
-          title='Create article'>
-          Create article
-        </button>
-      )}
-    </div>
-  );
+  return <div className='news-toolbar'>{children}</div>;
 }
+NewsToolbar.Item = NewsToolbarItem;
+export default NewsToolbar;

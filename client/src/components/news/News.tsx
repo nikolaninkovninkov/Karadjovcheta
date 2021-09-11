@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as newsApi from '../../api/news';
 import useAuth from '../../hooks/useAuth';
 import NewsArticleData from '../../types/requests/NewsArticleData';
@@ -17,6 +18,7 @@ export default function News() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(undefined as AxiosError | undefined);
   const [currentTab, setCurrentTab] = useState('news');
+  const [t] = useTranslation('news');
   const { token, user } = useAuth();
   useEffect(() => {
     setLoading(true);
@@ -73,9 +75,25 @@ export default function News() {
   }
   return (
     <div className='news'>
-      <NewsToolbar
-        setCurrentTab={setCurrentTab}
-        currentTab={currentTab}></NewsToolbar>
+      <NewsToolbar setCurrentTab={setCurrentTab} currentTab={currentTab}>
+        <NewsToolbar.Item
+          show={currentTab !== 'create' && !!user?.permissions.news.canPost}>
+          <button
+            onClick={() => setCurrentTab('create')}
+            className='create-article'
+            title='Create article'>
+            {t('create-article')}
+          </button>
+        </NewsToolbar.Item>
+        <NewsToolbar.Item show={currentTab !== 'news'}>
+          <button
+            onClick={() => setCurrentTab('news')}
+            className='back-to-news'
+            title='Back to news'>
+            {t('back-to-news')}
+          </button>
+        </NewsToolbar.Item>
+      </NewsToolbar>
       {!loading && (
         <>
           {renderTab()}
