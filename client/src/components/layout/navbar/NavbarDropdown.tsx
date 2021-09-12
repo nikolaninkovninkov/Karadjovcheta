@@ -2,7 +2,6 @@ import React, { ReactNode, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import useClickOutside from '../../../hooks/useClickOutside';
 import useToggle from '../../../hooks/useToggle';
-import NavbarLink from './NavbarLink';
 function Field({
   text,
   to,
@@ -25,14 +24,10 @@ function Field({
 function NavbarDropdown({
   text,
   children,
-  showFields = true,
-  to,
   show = true,
 }: {
   text: string;
   children: ReactNode;
-  showFields?: boolean;
-  to?: string;
   show?: boolean;
 }) {
   const [open, toggleOpen] = useToggle();
@@ -43,8 +38,8 @@ function NavbarDropdown({
       className='navbar-dropdown'
       onClick={() => toggleOpen()}
       ref={dropdownRef}>
-      <NavbarLink text={text} {...(!showFields && { to })} />
-      {showFields && <div className='fields'>{open && children}</div>}
+      <span className='navbar-link'>{text}</span>
+      <div className='fields'>{open && children}</div>
     </div>
   ) : (
     <></>

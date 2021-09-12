@@ -8,10 +8,12 @@ import NavbarLink from './NavbarLink';
 import NavbarButton from './NavbarButton';
 import NavbarDropdown from './NavbarDropdown';
 import atLeastOneTruthy from '../../../utils/atLeastOneTruthy';
+import useDebug from '../../../hooks/useDebug';
 export default function Navbar() {
   const [t] = useTranslation('navbar');
   const { user } = useAuth();
   const [mobileShow, toggleMobileShow] = useToggle(false);
+  useDebug(user);
   return (
     <header>
       <h1 className='logo'>Karadjovcheta</h1>
@@ -20,29 +22,29 @@ export default function Navbar() {
         <NavbarLink to='/news' text={t('news')} />
         <NavbarLink to='/profile' text={t('profile')} show={!!user} />
         <NavbarButton to='/login' text={t('login')} show={!user} />
-        {!!user && (
-          <NavbarDropdown
-            text={t('dashboard')}
-            show={!!user}
-            to='/dashboard'
-            showFields={user && atLeastOneTruthy(user.permissions.dashboard)}>
-            <NavbarDropdown.Field
-              text={t('student-dashboard')}
-              to='/student-dashboard'
-              show={user.permissions.dashboard.canAccessStudentDashboard}
-            />
-            <NavbarDropdown.Field
-              text={t('moderator-dashboard')}
-              to='/moderator-dashboard'
-              show={user.permissions.dashboard.canAccessModeratorDashboard}
-            />
-            <NavbarDropdown.Field
-              text={t('admin-dashboard')}
-              to='/admin-dashboard'
-              show={user.permissions.dashboard.canAccessAdminDashboard}
-            />
-          </NavbarDropdown>
-        )}
+        <NavbarDropdown
+          text={t('dashboard')}
+          show={!!user && atLeastOneTruthy(user.permissions.dashboard)}>
+          <NavbarDropdown.Field
+            text={t('student-dashboard')}
+            to='/student-dashboard'
+            show={
+              !!user && user.permissions.dashboard.canAccessStudentDashboard
+            }
+          />
+          <NavbarDropdown.Field
+            text={t('moderator-dashboard')}
+            to='/moderator-dashboard'
+            show={
+              !!user && user.permissions.dashboard.canAccessModeratorDashboard
+            }
+          />
+          <NavbarDropdown.Field
+            text={t('admin-dashboard')}
+            to='/admin-dashboard'
+            show={!!user && user.permissions.dashboard.canAccessAdminDashboard}
+          />
+        </NavbarDropdown>
       </nav>
       <button className='mobile-toggle' onClick={() => toggleMobileShow()}>
         <MenuIcon fontSize='large' className='hamburger' />

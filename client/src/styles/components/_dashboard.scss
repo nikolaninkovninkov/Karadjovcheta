@@ -1,2 +1,25 @@
 .dashboard {
+  &-student {
+    width: 100%;
+  }
+  &-card {
+    max-width: min-content;
+    border-radius: 20px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    padding: 2rem;
+    > * {
+      font-family: Merriweather;
+    }
+    img {
+      max-width: calc(100% + 4rem);
+      position: relative;
+      right: 2rem;
+    }
+    h1 {
+      font-weight: 900;
+    }
+    h3 {
+      font-weight: 300;
+    }
+  }
 }

@@ -4,10 +4,12 @@ import useAuth from '../hooks/useAuth';
 import Login from './auth/Login';
 import Profile from './auth/Profile';
 import Register from './auth/Register';
+import StudentDashboard from './dashboard/StudentDashboard';
 import Navbar from './layout/navbar/Navbar';
 import News from './news/News';
 import NewsArticle from './news/NewsArticle';
 import Home from './pages/Home';
+import Vote from './vote/Vote';
 function App() {
   const { user } = useAuth();
   return (
@@ -36,15 +38,28 @@ function App() {
         )}
       />
       <Route path='/news/:id' exact component={NewsArticle}></Route>
-      <Route path='/student-dashboard' exact>
-        {user ? (
-          <>
+      {user?.permissions.dashboard.canAccessStudentDashboard && (
+        <>
+          <Route path='/student-dashboard' exact>
             <Navbar />
-          </>
-        ) : (
-          <Redirect to='login' />
-        )}
-      </Route>
+            <StudentDashboard />
+          </Route>
+          <Route path='/vote' exact>
+            <Navbar />
+            <Vote />
+          </Route>
+        </>
+      )}
+      {user?.permissions.dashboard.canAccessModeratorDashboard && (
+        <Route path='/moderator-dashboard' exact>
+          <Navbar />
+        </Route>
+      )}
+      {user?.permissions.dashboard.canAccessAdminDashboard && (
+        <Route path='/admin-dashboard' exact>
+          <Navbar />
+        </Route>
+      )}
     </div>
   );
 }

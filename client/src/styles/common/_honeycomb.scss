@@ -19,7 +19,7 @@ $viewport-thereshold: $hexagon-width + $hexagon-margin;
   margin: 0 auto;
   padding: 0;
   transform: translateY(#{math.div($hexagon-height, 4)});
-
+  font-family: Montserrat, sans-serif;
   &-cell {
     flex: 0 1 $hexagon-width;
     max-width: $hexagon-width;
@@ -28,10 +28,10 @@ $viewport-thereshold: $hexagon-width + $hexagon-margin;
       $hexagon-margin;
     position: relative;
     padding: 0.5em;
-
     text-align: center;
-    z-index: 1;
-
+    &.isLink {
+      cursor: pointer;
+    }
     &__title {
       height: 100%;
       display: flex;
@@ -44,7 +44,6 @@ $viewport-thereshold: $hexagon-width + $hexagon-margin;
       font-weight: 700;
       font-size: 1.75em;
       transition: opacity 350ms;
-
       > small {
         font-weight: 300;
         margin-top: 0.25em;

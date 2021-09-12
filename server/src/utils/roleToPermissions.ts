@@ -23,7 +23,7 @@ const permissions: Record<UserRole, UserPermissions> = {
   },
   moderator: {
     news: {
-      canPost: false,
+      canPost: true,
     },
     dashboard: {
       canAccessStudentDashboard: true,

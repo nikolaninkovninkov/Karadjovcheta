@@ -1,23 +1,17 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function NavbarLink({
   to,
   text,
   show = true,
 }: {
-  to?: string;
+  to: string;
   text: string;
   show?: boolean;
 }) {
-  const history = useHistory();
   return show ? (
-    <Link
-      className='navbar-link'
-      to={to || history.location.pathname}
-      role='link'>
-      {text}
-    </Link>
+    <Link className='navbar-link' role='link' to={to} children={text} />
   ) : (
     <></>
   );
