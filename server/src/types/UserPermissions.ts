@@ -7,4 +7,8 @@ export default interface UserPermissions {
     canAccessModeratorDashboard: boolean;
     canAccessAdminDashboard: boolean;
   };
+  vote: {
+    canAddVoteItem: boolean;
+    canVote: boolean;
+  };
 }

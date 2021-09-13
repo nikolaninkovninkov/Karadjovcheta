@@ -7,6 +7,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["src/index.d.ts"]
+    "typeRoots": ["src/index.d.ts"],
+    "lib": ["es2015", "dom"]
   }
 }
