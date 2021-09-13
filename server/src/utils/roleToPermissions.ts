@@ -17,7 +17,7 @@ const permissions: Record<UserRole, UserPermissions> = {
   },
   student: {
     news: {
-      canPost: false,
+      canPost: true,
     },
     dashboard: {
       canAccessStudentDashboard: true,
