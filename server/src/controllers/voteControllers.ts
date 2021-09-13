@@ -5,6 +5,7 @@ import VoteItemData from '../types/VoteItemData';
 import VotePairResult from '../types/VotePairResult';
 import elo from '../utils/elo';
 import roleToPermissions from '../utils/roleToPermissions';
+import toClientVoteItem from '../utils/toClientVoteItem';
 const getPair = async () => {
   const count = await VoteItemModel.countDocuments();
   if (count == 0) return {};
@@ -14,7 +15,8 @@ const getPair = async () => {
   const second = await VoteItemModel.findOne({ id: { $ne: first?.id } }).skip(
     randomSecond,
   );
-  return { first, second };
+  if (!first || !second) return {};
+  return { first: toClientVoteItem(first), second: toClientVoteItem(second) };
 };
 export async function getVoteItemPair(
   req: express.Request,

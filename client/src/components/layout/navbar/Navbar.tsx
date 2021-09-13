@@ -8,12 +8,10 @@ import NavbarLink from './NavbarLink';
 import NavbarButton from './NavbarButton';
 import NavbarDropdown from './NavbarDropdown';
 import atLeastOneTruthy from '../../../utils/atLeastOneTruthy';
-import useDebug from '../../../hooks/useDebug';
 export default function Navbar() {
   const [t] = useTranslation('navbar');
   const { user } = useAuth();
   const [mobileShow, toggleMobileShow] = useToggle(false);
-  useDebug(user);
   return (
     <header>
       <h1 className='logo'>Karadjovcheta</h1>
