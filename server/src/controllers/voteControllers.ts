@@ -7,15 +7,18 @@ import VotePairResult from '../types/VotePairResult';
 import elo from '../utils/elo';
 import roleToPermissions from '../utils/roleToPermissions';
 import toClientVoteItem from '../utils/toClientVoteItem';
-const getPair = async () => {
+const getPair = async (nameToAvoid: string) => {
   const count = await VoteItemModel.countDocuments();
   if (count == 0) return {};
   const randomFirst = Math.floor(Math.random() * count);
   const randomSecond = Math.floor(Math.random() * (count - 1));
-  const first = await VoteItemModel.findOne().skip(randomFirst);
-  const second = await VoteItemModel.findOne({ id: { $ne: first?.id } }).skip(
-    randomSecond,
-  );
+  const first = await VoteItemModel.findOne({
+    name: { $ne: nameToAvoid },
+  }).skip(randomFirst);
+  const second = await VoteItemModel.findOne({
+    id: { $ne: first?.id },
+    name: { $ne: nameToAvoid },
+  }).skip(randomSecond);
   if (!first || !second) return {};
   return { first: toClientVoteItem(first), second: toClientVoteItem(second) };
 };
@@ -29,7 +32,7 @@ export async function getVoteItemPair(
   if (!permissions.vote.canVote) {
     return res.status(403).json({ message: 'Insufficient permissions' });
   }
-  const pair = await getPair();
+  const pair = await getPair(user?.name);
   res.json({ pair, votesLeft: user.votesLeft });
 }
 export async function addVoteItem(req: express.Request, res: express.Response) {
@@ -92,7 +95,7 @@ export async function resolveMatch(
       matchesWon: second.matchesWon + 1 - result,
     },
   );
-  const pair = await getPair();
+  const pair = await getPair(user?.name);
   const updatedUser = await UserModel.findByIdAndUpdate(user._id, {
     votesLeft: user.votesLeft - 1,
   });
