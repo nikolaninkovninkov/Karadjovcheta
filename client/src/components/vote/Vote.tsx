@@ -3,12 +3,10 @@ import { getPair, sendVotePairResult } from '../../api/vote';
 import useAuth from '../../hooks/useAuth';
 import VoteItemPair from '../../types/vote/VoteItemPair';
 import VoteOutcome from '../../types/vote/VoteOutcome';
-import timeout from '../../utils/timeout';
 
 export default function Vote() {
   const { token } = useAuth();
   const [pair, setPair] = useState<VoteItemPair>();
-  const [times, setTimes] = useState(0);
   const getVoteItemPair = useCallback(() => {
     getPair(token).then((response) => setPair(response.data));
   }, [token]);
@@ -24,7 +22,6 @@ export default function Vote() {
   useEffect(() => {
     getVoteItemPair();
   }, [getVoteItemPair]);
-  // console.log(pair);
   return pair && Object.keys(pair).length ? (
     <div className='vote'>
       <h1>Vote for one</h1>
