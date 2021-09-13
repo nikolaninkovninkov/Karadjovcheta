@@ -10,4 +10,5 @@ export default interface DatabaseUser {
   createdAt: string;
   updatedAt: string;
   role: UserRole;
+  votesLeft: number;
 }

@@ -20,7 +20,7 @@ const userSchema = new Schema<DatabaseUser>(
       enum: ['admin', 'user', 'moderator', 'student'],
       default: 'user',
     },
-    voted: { type: Boolean, required: true, default: false },
+    votesLeft: { type: Number, required: true, default: 30 },
   },
   { timestamps: true },
 );

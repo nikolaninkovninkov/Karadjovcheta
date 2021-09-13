@@ -7,8 +7,12 @@ import VoteOutcome from '../../types/vote/VoteOutcome';
 export default function Vote() {
   const { token } = useAuth();
   const [pair, setPair] = useState<VoteItemPair>();
+  const [votesLeft, setVotesLeft] = useState<number>();
   const getVoteItemPair = useCallback(() => {
-    getPair(token).then((response) => setPair(response.data));
+    getPair(token).then((response) => {
+      setPair(response.data.pair);
+      setVotesLeft(response.data.votesLeft);
+    });
   }, [token]);
   const sendVoteResult = async (outcome: VoteOutcome) => {
     if (!pair) return;
@@ -17,14 +21,22 @@ export default function Vote() {
       second: pair.second.id,
       result: outcome,
     });
-    setPair(response.data);
+    setPair(response.data.pair);
+    setVotesLeft(response.data.votesLeft);
   };
   useEffect(() => {
     getVoteItemPair();
   }, [getVoteItemPair]);
+  if (votesLeft === 0)
+    return (
+      <div className='vote'>
+        <h1>No votes left</h1>
+      </div>
+    );
   return pair && Object.keys(pair).length ? (
     <div className='vote'>
       <h1>Vote for one</h1>
+      <h2>Votes left: {votesLeft}</h2>
       <button
         onClick={() => {
           sendVoteResult(1);

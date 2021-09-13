@@ -11,7 +11,7 @@ export async function getPair(token: string) {
     },
   };
   const response = await axios(axiosRequestConfig);
-  return response as AxiosResponse<VoteItemPair>;
+  return response as AxiosResponse<{ pair: VoteItemPair; votesLeft: number }>;
 }
 export async function sendVotePairResult(
   token: string,
@@ -26,5 +26,5 @@ export async function sendVotePairResult(
     data: votePairResult,
   };
   const response = await axios(axiosRequestConfig);
-  return response as AxiosResponse<VoteItemPair>;
+  return response as AxiosResponse<{ pair: VoteItemPair; votesLeft: number }>;
 }

@@ -1,5 +1,6 @@
 import express from 'express';
 import { validationResult } from 'express-validator';
+import UserModel from '../models/UserModel';
 import VoteItemModel from '../models/VoteItemModel';
 import VoteItemData from '../types/VoteItemData';
 import VotePairResult from '../types/VotePairResult';
@@ -29,7 +30,7 @@ export async function getVoteItemPair(
     return res.status(403).json({ message: 'Insufficient permissions' });
   }
   const pair = await getPair();
-  res.json(pair);
+  res.json({ pair, votesLeft: user.votesLeft });
 }
 export async function addVoteItem(req: express.Request, res: express.Response) {
   const errors = validationResult(req);
@@ -62,6 +63,9 @@ export async function resolveMatch(
   if (!permissions.vote.canVote) {
     return res.json({ message: 'Insufficient permissions' });
   }
+  if (user.votesLeft == 0) {
+    return res.status(400).json({ message: 'Voted too many times' });
+  }
   const first = await VoteItemModel.findOne({ id: firstId });
   const second = await VoteItemModel.findOne({ id: secondId });
   if (!first || !second)
@@ -81,5 +85,9 @@ export async function resolveMatch(
     { rating: newRatings.ratingB },
   );
   const pair = await getPair();
-  res.json(pair);
+  const updatedUser = await UserModel.findByIdAndUpdate(user._id, {
+    votesLeft: user.votesLeft - 1,
+  });
+  if (!updatedUser) return;
+  res.json({ pair, votesLeft: updatedUser.votesLeft - 1 });
 }
