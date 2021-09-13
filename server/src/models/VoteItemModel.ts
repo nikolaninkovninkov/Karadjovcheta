@@ -15,6 +15,8 @@ const userSchema = new Schema<DatabaseVoteItem>(
       unique: true,
       immutable: true,
     },
+    totalMatches: { type: Number, required: true, default: 0 },
+    matchesWon: { type: Number, required: true, default: 0 },
   },
   { timestamps: true },
 );

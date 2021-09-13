@@ -6,4 +6,6 @@ export default interface DatabaseVoteItem {
   __v: number;
   createdAt: string;
   updatedAt: string;
+  totalMatches: number;
+  matchesWon: number;
 }

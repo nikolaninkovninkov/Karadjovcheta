@@ -75,14 +75,22 @@ export async function resolveMatch(
     {
       id: first.id,
     },
-    { rating: newRatings.ratingA },
+    {
+      rating: newRatings.ratingA,
+      totalMatches: first.totalMatches + 1,
+      matchesWon: first.matchesWon + result,
+    },
   );
 
   await VoteItemModel.findOneAndUpdate(
     {
       id: second.id,
     },
-    { rating: newRatings.ratingB },
+    {
+      rating: newRatings.ratingB,
+      totalMatches: second.totalMatches + 1,
+      matchesWon: second.matchesWon + 1 - result,
+    },
   );
   const pair = await getPair();
   const updatedUser = await UserModel.findByIdAndUpdate(user._id, {
