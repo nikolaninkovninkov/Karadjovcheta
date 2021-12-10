@@ -5,38 +5,43 @@ import getFirstPropertyValue from '../../utils/getFirstProperty';
 import RegisterData from '../../types/requests/RegisterData';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Loader from '../layout/Loader';
 export default function Register() {
-  const { register, error } = useAuth();
-  const [t] = useTranslation('auth-form');
+  const { register, error, loading } = useAuth();
+  const [t] = useTranslation('auth');
   const registerSchema = yup.object().shape({
     name: yup.string().required('Name field is required'),
     username: yup
       .string()
-      .required('Username field is required')
+      .required(t('username-field-required'))
+      .min(3, t('username-min-length'))
+      .max(32, t('username-max-length'))
       .test(
-        'no-space-lowercase-min-3-check',
-        'Username must be all lowercase, at least 3 characters in length, and have no spaces in it',
-        (username) =>
-          !!username && username.length >= 3 && !/\s/.test(username),
+        'username-check',
+        t('username-requirements'),
+        (username) => !!username && /^[a-zA-Z0-9._]+$/.test(username),
       ),
     email: yup
       .string()
-      .required('Email field is required')
-      .email('Email not valid'),
+      .required(t('email-field-required'))
+      .email(t('email-not-valid')),
     password: yup
       .string()
-      .required('Password field is required')
-      .min(8, 'Password has to be at least 8 characters long')
-      .max(32, 'Password has to be at most 32 characters long'),
+      .required(t('password-field-required'))
+      .min(8, t('password-min-length'))
+      .max(32, t('password-max-length')),
   });
+
   function getDisplayError(errors: FormikErrors<RegisterData>) {
     if (getFirstPropertyValue(errors)) {
       return getFirstPropertyValue(errors);
     }
-    if (error?.response?.data.message) return error.response.data.message;
-    if (error) return 'An unexpected error has occurred. Please try again.';
+    if (error?.response?.data.message) return t(error.response.data.message);
+    if (typeof error?.response?.data?.errors?.length == 'number')
+      return error.response.data.errors[0].msg;
+    if (error) return t('unexpected-error');
   }
-  return (
+  return !loading ? (
     <Formik
       initialValues={
         { username: '', password: '', email: '', name: '' } as RegisterData
@@ -67,5 +72,7 @@ export default function Register() {
         </Form>
       )}
     </Formik>
+  ) : (
+    <Loader />
   );
 }

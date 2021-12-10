@@ -17,9 +17,10 @@ const userSchema = new Schema<DatabaseUser>(
     role: {
       type: String,
       required: true,
-      enum: ['admin', 'user', 'class-member', 'moderator-class-member'],
+      enum: ['admin', 'user', 'moderator', 'student'],
       default: 'user',
     },
+    votesLeft: { type: Number, required: true, default: 30 },
   },
   { timestamps: true },
 );

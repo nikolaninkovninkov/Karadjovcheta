@@ -1,0 +1,30 @@
+@use 'pillshape';
+@mixin pillbutton(
+  $backgroundColor,
+  $textColor,
+  $backgroundColorHover: null,
+  $textColorHover: null,
+  $borderColor: null,
+  $borderColorHover: null,
+  $borderWidth: 1px,
+  $fontSize: 1rem,
+  $noMargin: false
+) {
+  @include pillshape.pillshape();
+  $animationDuration: 0.5s;
+  padding: 14px 20px;
+  @if not $noMargin {
+    margin: 8px 0;
+  }
+  border: $borderWidth solid $borderColor;
+  cursor: pointer;
+  background-color: $backgroundColor;
+  color: $textColor;
+  font-size: $fontSize;
+  &:hover {
+    background-color: $backgroundColorHover;
+    color: $textColorHover;
+    border: $borderWidth solid $borderColorHover;
+    transition: $animationDuration ease-out;
+  }
+}

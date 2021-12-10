@@ -8,6 +8,7 @@ import toTokenData from '../utils/toTokenData';
 import { validationResult } from 'express-validator';
 import DatabaseUser from '../types/database/DatabaseUser';
 import toClientUser from '../utils/toClientUser';
+import timeout from '../utils/timeout';
 async function registerController(req: express.Request, res: express.Response) {
   const registerData = req.body as RegisterData;
   const user = new UserModel(registerData);
@@ -62,9 +63,7 @@ async function loginController(req: express.Request, res: express.Response) {
   );
   if (!foundUser) {
     return res.status(400).json({
-      message: `No account was fount with that ${
-        isEmail ? 'email' : 'username'
-      }. Maybe you haven't registered yet?`,
+      message: `no-account-${isEmail ? 'email' : 'username'}`,
     });
   }
   const isPasswordMatch = await bcrypt.compare(
@@ -72,7 +71,7 @@ async function loginController(req: express.Request, res: express.Response) {
     foundUser.password,
   );
   if (!isPasswordMatch) {
-    return res.status(400).json({ message: 'Invalid credentials' });
+    return res.status(400).json({ message: 'wrong-password' });
   }
   if (!process.env.JWT_SECRET) {
     res.json({ message: 'Server error' });
@@ -91,7 +90,7 @@ async function loginController(req: express.Request, res: express.Response) {
 function getUserController(req: express.Request, res: express.Response) {
   const user = req.user as DatabaseUser;
   if (!user) return res.json(user);
-  const clientUser = toClientUser(user, false);
+  const clientUser = toClientUser(user, true);
   res.json(clientUser);
 }
 export { registerController, loginController, getUserController };

@@ -1,0 +1,16 @@
+.vote {
+  font-family: Merriweather, sans-serif;
+  text-align: center;
+  &-btn {
+    box-shadow: 0 0 20px 8px hsl(0, 0%, 70%);
+    padding: 2rem;
+    border: none;
+    margin: 2rem;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: transform 1s;
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+}

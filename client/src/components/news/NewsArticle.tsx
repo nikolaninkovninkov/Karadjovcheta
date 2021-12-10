@@ -20,7 +20,7 @@ export default function NewsArticle({
   }, [id]);
   function renderContent() {
     const paragraphs = article.content.split(/\n/);
-    return paragraphs.map((p) => <p>{p}</p>);
+    return paragraphs.map((p, index) => <p key={index}>{p}</p>);
   }
   if (loading) return <Loader></Loader>;
   return (
@@ -30,6 +30,8 @@ export default function NewsArticle({
         By {article?.author.username},{' '}
         {new Date(article.dateCreated).toLocaleDateString()}
       </h2>
+      {/* <aside>Top highlight</aside>
+      <blockquote>Hello Hello Helloo Hello</blockquote> */}
       {renderContent()}
     </div>
   );

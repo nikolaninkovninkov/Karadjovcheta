@@ -4,7 +4,11 @@ export default interface UserPermissions {
   };
   dashboard: {
     canAccessStudentDashboard: boolean;
-    canAccessStudentModeratorDashboard: boolean;
+    canAccessModeratorDashboard: boolean;
     canAccessAdminDashboard: boolean;
+  };
+  vote: {
+    canAddVoteItem: boolean;
+    canVote: boolean;
   };
 }

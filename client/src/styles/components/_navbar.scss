@@ -1,4 +1,5 @@
 @use '../theme';
+@use '../common';
 header {
   background: theme.$backgroundColorSecondary;
   text-align: center;
@@ -6,21 +7,21 @@ header {
   z-index: 999;
   width: 100%;
   top: 0;
-}
-header * {
-  font-family: Montserrat, sans-serif;
+  @media screen and (min-width: 835px) {
+    display: grid;
+    grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+  }
+  * {
+    font-family: Montserrat, sans-serif;
+  }
 }
 .nav-toggle {
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 
-.nav-toggle:focus ~ .nav-toggle-label {
-  outline: 3px solid rgba(lightblue, 0.75);
-}
-
-.nav-toggle-label {
+.mobile-toggle {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,34 +29,17 @@ header * {
   height: 100%;
   display: flex;
   align-items: center;
+  background-color: inherit;
+  border: none;
+  @media screen and (min-width: 835px) {
+    display: none;
+  }
+  .hamburger {
+    color: theme.$textColorSecondary;
+  }
 }
 
-.nav-toggle-label span,
-.nav-toggle-label span::before,
-.nav-toggle-label span::after {
-  display: block;
-  background: white;
-  height: 2px;
-  width: 2em;
-  border-radius: 2px;
-  position: relative;
-}
-
-.nav-toggle-label span::before,
-.nav-toggle-label span::after {
-  content: '';
-  position: absolute;
-}
-
-.nav-toggle-label span::before {
-  bottom: 7px;
-}
-
-.nav-toggle-label span::after {
-  top: 7px;
-}
-
-nav {
+.navbar {
   position: absolute;
   text-align: left;
   top: 100%;
@@ -65,63 +49,66 @@ nav {
   transform: scale(1, 0);
   transform-origin: top;
   transition: transform 400ms ease-in-out;
-}
-
-nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-nav li {
-  margin-bottom: 1em;
-  margin-left: 1em;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 150ms ease-in-out;
-}
-
-nav a:hover {
-  color: #000;
-}
-
-.nav-toggle:checked ~ nav {
-  transform: scale(1, 1);
-  background-color: theme.$backgroundColorSecondary;
-}
-
-.nav-toggle:checked ~ nav a {
-  opacity: 1;
-  transition: opacity 250ms ease-in-out 250ms;
-}
-.logo {
-  color: theme.$textColorSecondary;
-  transform: scale(0.8);
-}
-@media screen and (min-width: 800px) {
-  .nav-toggle-label {
-    display: none;
+  > * {
+    margin-left: 1em;
+    margin-bottom: 2em;
   }
 
-  header {
-    display: grid;
-    grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+  &.show {
+    transform: scale(1, 1);
   }
-
-  .logo {
-    grid-column: 2 / 3;
+  &-link {
+    color: theme.$textColorSecondary;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: opacity 150ms ease-in-out;
+    cursor: pointer;
+    display: block;
+    user-select: none;
+    &:hover {
+      color: theme.$textColorPrimary;
+    }
   }
-
-  nav {
-    // all: unset; /* this causes issues with Edge, since it's unsupported */
-
-    /* the following lines are not from my video, but add Edge support */
+  &-button {
+    @include common.pillbutton(
+      theme.$backgroundColorSecondary,
+      theme.$textColorSecondary,
+      theme.$textColorSecondary,
+      theme.$backgroundColorSecondary,
+      theme.$textColorSecondary,
+      theme.$textColorSecondary,
+      $noMargin: true
+    );
+    margin-left: 1em;
+  }
+  &-dropdown {
+    .fields {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0px 8px 16px 0px #00000033;
+    }
+    &-field {
+      cursor: pointer;
+      background-color: hsl(0, 0%, 100%);
+      padding: 1rem;
+      &:not(:last-child) {
+        border-bottom: 1px solid lightgray;
+      }
+      &:hover {
+        transition: background-color 0.25s;
+        background-color: hsl(0, 0%, 90%);
+      }
+    }
+    &:hover {
+      .fields {
+        display: block;
+      }
+    }
+  }
+  @media screen and (min-width: 835px) {
     position: relative;
     text-align: left;
     transition: none;
@@ -129,42 +116,39 @@ nav a:hover {
     background: none;
     top: initial;
     left: initial;
-    /* end Edge support stuff */
-
     grid-column: 3 / 4;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    > * {
+      margin-left: 3em;
+      margin-bottom: 0;
+    }
+    &-link {
+      opacity: 1;
+      position: relative;
+      &::before {
+        content: '';
+        display: block;
+        height: 5px;
+        background: black;
+        position: absolute;
+        top: -0.75em;
+        left: 0;
+        right: 0;
+        transform: scale(0, 1);
+        transition: transform ease-in-out 250ms;
+      }
+      &:hover::before {
+        transform: scale(1, 1);
+      }
+    }
   }
-
-  nav ul {
-    display: flex;
-  }
-
-  nav li {
-    margin-left: 3em;
-    margin-bottom: 0;
-  }
-
-  nav a {
-    opacity: 1;
-    position: relative;
-  }
-
-  nav a::before {
-    content: '';
-    display: block;
-    height: 5px;
-    background: black;
-    position: absolute;
-    top: -0.75em;
-    left: 0;
-    right: 0;
-    transform: scale(0, 1);
-    transition: transform ease-in-out 250ms;
-  }
-
-  nav a:hover::before {
-    transform: scale(1, 1);
+}
+.logo {
+  color: theme.$textColorSecondary;
+  transform: scale(0.8);
+  @media screen and (min-width: 835px) {
+    grid-column: 2 / 3;
   }
 }

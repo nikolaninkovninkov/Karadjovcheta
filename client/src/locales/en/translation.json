@@ -6,9 +6,14 @@
   "navbar": {
     "home": "Home",
     "news": "News",
-    "profile": "Profile"
+    "profile": "Profile",
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "student-dashboard": "Student dashboard",
+    "moderator-dashboard": "Moderator dashboard",
+    "admin-dashboard": "Admin dashboard"
   },
-  "auth-form": {
+  "auth": {
     "login": "Login",
     "username": "Username",
     "email": "Email",
@@ -18,6 +23,26 @@
     "here": "here",
     "no-account": "Don't have an account? Register",
     "already-account": "Already have an account? Login",
-    "register": "Register"
+    "register": "Register",
+    "name-field-required": "Name field required",
+    "username-field-required": "Username field required",
+    "password-field-required": "Password field required",
+    "email-field-required": "Email field required",
+    "email-username-field-required": "Email/Username field required",
+    "email-not-valid": "Email not valid",
+    "username-min-length": "Username must be at least 3 characters long",
+    "username-max-length": "Username must be at least 32 characters long",
+    "username-requirements": "Username must only contain letters, numbers, dots and underscores",
+    "password-min-length": "Password must be at least 8 characters long",
+    "password-max-length": "Password must be at most 32 characters long",
+    "unexpected-error": "An unexpected error has occurred. Please try again later.",
+    "no-account-username": "No account with the username specified. Maybe you haven't registered yet?",
+    "no-account-email": "No account with the email specified. Maybe you haven't registered yet?",
+    "wrong-password": "Wrong password"
+  },
+  "news": {
+    "back-to-news": "Back to news",
+    "create-article": "Create article",
+    "read-more": "Read more"
   }
 }
