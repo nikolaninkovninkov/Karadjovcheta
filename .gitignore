@@ -1,0 +1,8 @@
+node_modules
+build
+.env
+.firebaserc
+keys
+.DS_STORE
+css
+.env.local

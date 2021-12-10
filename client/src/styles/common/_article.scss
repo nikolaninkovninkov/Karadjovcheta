@@ -1,0 +1,59 @@
+.article {
+  display: grid;
+  grid-template-columns: 1fr 1fr 10px 440px 10px 1fr 1fr;
+  line-height: 1.4;
+  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+  height: 100vh;
+  text-align: left;
+  > * {
+    grid-column: 4;
+    min-width: 0;
+  }
+  > figure {
+    grid-column: 1 / -1;
+    margin: 20px 0;
+  }
+  > aside {
+    grid-column: 5 / -1;
+    font-family: Lucida Grande;
+    margin: 30px 20px;
+    color: #666;
+    font-size: 0.8em;
+  }
+  > blockquote {
+    grid-column: 3 / span 2;
+    margin: 0px 0;
+    color: #666;
+    border-left: 3px solid black;
+    padding-left: 10px;
+  }
+  > h1 {
+    font-family: Lucida Grande;
+  }
+  > p {
+    --x-height-multiplier: 0.375;
+    --baseline-multiplier: 0.17;
+    font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+    letter-spacing: 0.01rem;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -0.003em;
+    color: rgba(0, 0, 0, 0.84);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  img {
+    width: 100%;
+  }
+  figure {
+    margin: 0;
+  }
+
+  figure figcaption {
+    color: #666;
+    font-style: italic;
+    font-size: 0.8em;
+  }
+}

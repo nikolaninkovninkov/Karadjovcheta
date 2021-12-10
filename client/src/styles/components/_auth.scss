@@ -1,0 +1,48 @@
+@use '../variables';
+@use '../theme';
+.auth-form {
+  $borderColor: #cccccc;
+  padding: 16px;
+  margin: 10px;
+  color: theme.$textColorPrimary;
+  border: 1px solid $borderColor;
+  > * {
+    font-family: Montserrat, sans-serif;
+  }
+  .heading {
+    text-align: center;
+  }
+  .field {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 8px 0;
+    border: 1px solid hsl(0, 0%, 80%);
+  }
+  .error {
+    color: theme.$errorColorPrimary;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+  }
+  button {
+    color: theme.$textColorSecondary;
+    background-color: theme.$backgroundColorSecondary;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 100000px;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .footer {
+    text-align: center;
+    .link {
+      text-decoration: none;
+      color: theme.$linkColorPrimary;
+      font-weight: 1000;
+    }
+  }
+}
