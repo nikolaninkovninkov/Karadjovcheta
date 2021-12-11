@@ -9,7 +9,6 @@ import Navbar from './layout/navbar/Navbar';
 import News from './news/News';
 import NewsArticle from './news/NewsArticle';
 import Home from './pages/Home';
-import Vote from './vote/Vote';
 function App() {
   const { user } = useAuth();
   return (
@@ -47,7 +46,6 @@ function App() {
             </Route>
             <Route path='/vote' exact>
               <Navbar />
-              <Vote />
             </Route>
           </>
         )}

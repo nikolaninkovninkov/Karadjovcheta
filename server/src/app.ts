@@ -4,7 +4,6 @@ import usersRouter from './routes/usersRouter';
 import { config } from 'dotenv';
 import cors from 'cors';
 import newsRouter from './routes/newsRouter';
-import voteRouter from './routes/voteRouter';
 config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,7 +14,6 @@ app.use(cors({ origin: '*' }));
 
 app.use('/api/users', usersRouter);
 app.use('/api/news', newsRouter);
-app.use('/api/vote', voteRouter);
 app.listen(port, () => {
   console.log('Listening on http://localhost:' + port);
 
